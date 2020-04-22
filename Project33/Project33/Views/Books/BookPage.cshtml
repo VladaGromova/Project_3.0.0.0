@@ -1,0 +1,13 @@
+﻿@model IEnumerable<Project33.Models.Books>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_MainPageLayout";
+}
+
+@foreach (var b in Model)
+{
+    <td><p>@b.description</p></td>
+}
+
+
