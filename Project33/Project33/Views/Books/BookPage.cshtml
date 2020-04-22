@@ -1,13 +1,12 @@
-﻿@model IEnumerable<Project33.Models.Books>
+﻿@model Project33.Models.Books
 
 @{
     ViewBag.Title = "title";
     Layout = "_MainPageLayout";
 }
 
-@foreach (var b in Model)
-{
-    <td><p>@b.description</p></td>
-}
+<h3>@Html.DisplayFor(model=>model.Name)</h3>
+    <td><p>@Html.DisplayFor(model=>model.description)</p></td>
+
 
 

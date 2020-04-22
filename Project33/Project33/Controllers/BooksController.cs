@@ -36,9 +36,10 @@ namespace Project33.Controllers
 
         }
 
-        public ActionResult BookPage()
+        public ActionResult BookPage(int? id)
         {
-            return View(db.Books);
+            var b = db.Books.Find(id);
+            return View(b);
         }
     }
 }

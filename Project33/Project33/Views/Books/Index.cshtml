@@ -21,9 +21,13 @@
         @foreach (var b in Model)
         {
             <tr>
-                <td><a class="nav-link text-dark" asp-area="" asp-controller="Books" asp-action="BookPage">@b.Name</a></td>
-                <td><p>@b.Author</p></td>
-                <td><p>@b.Genre</p></td>
+                 <td>@Html.ActionLink(@b.Name, "BookPage", "Books", new {id = b.Id})</td>
+                
+                <td>
+                    <p>@b.Author</p></td>
+                <td>
+                    <p>@b.Genre</p></td>
+
             </tr>
         }
     </table>
