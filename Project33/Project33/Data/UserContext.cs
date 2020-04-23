@@ -13,7 +13,7 @@ using Project33.Models;
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=WebAppUsers;Username=postgres;Password=85ilasin85");
+            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=WebAppUsers;Username=postgres;Password=1923148");
         }
     }
 }

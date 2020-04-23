@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -40,6 +41,19 @@ namespace Project33.Controllers
         {
             var b = db.Books.Find(id);
             return View(b);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Index(string searchString)
+        {
+            var books = from b in db.Books select b;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                books = books.Where(b => b.Name.Contains(searchString));
+                //books = books.Where(s => s.Author.Contains(searchString));
+            }
+
+            return View(await books.ToListAsync());
         }
     }
 }

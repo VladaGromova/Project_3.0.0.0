@@ -16,7 +16,7 @@ namespace Project33.Data
         public  DbSet<Books> Books { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=Bookstore;Username=postgres;Password=85ilasin85");
+            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=Books;Username=postgres;Password=1923148");
         }
 
     }
