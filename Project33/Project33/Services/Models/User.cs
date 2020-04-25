@@ -1,4 +1,4 @@
-﻿﻿namespace Project33.Models
+﻿﻿namespace Project33.Services.Models
 {
     public class User
     {

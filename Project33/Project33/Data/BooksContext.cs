@@ -1,7 +1,7 @@
 ﻿﻿using Microsoft.EntityFrameworkCore;
-using Project33.Models;
-using Project33.Services;
-namespace Project33.Data
+using Project33.Services.Models;
+
+ namespace Project33.Data
 {
     public class BooksContext : DbContext
     {
@@ -16,7 +16,7 @@ namespace Project33.Data
         public  DbSet<Books> Books { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=Books;Username=postgres;Password=1923148");
+            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=Bookstore;Username=postgres;Password=85ilasin85");
         }
 
     }

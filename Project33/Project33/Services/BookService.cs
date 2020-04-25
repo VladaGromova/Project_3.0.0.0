@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Project33.Data;
-using Project33.Models;
-using Project33.Services;
+using Project33.Services.Models;
 
 namespace Project33.Services
 {

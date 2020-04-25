@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Project33.Data;
+using Project33.Services.Models;
 
  namespace Project33.Controllers
 {

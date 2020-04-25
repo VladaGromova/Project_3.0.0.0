@@ -1,5 +1,5 @@
 ﻿﻿﻿using Microsoft.EntityFrameworkCore;
-using Project33.Models;
+using Project33.Services.Models;
 
  namespace Project33.Data
 {
@@ -13,7 +13,7 @@ using Project33.Models;
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=WebAppUsers;Username=postgres;Password=1923148");
+            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=WebAppUsers;Username=postgres;Password=85ilasin85");
         }
     }
 }
