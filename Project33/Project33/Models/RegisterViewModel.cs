@@ -18,7 +18,7 @@ namespace Project33.Models
         
         [Display(Name = "Пароль")]
         [Required(ErrorMessage = "Не указан пароль")]
-        [RegularExpression(".+\\@.+\\..+", ErrorMessage = "Введите корректный адрес почты")]
+        //[RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Введите корректный адрес почты")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
         
@@ -29,6 +29,6 @@ namespace Project33.Models
         
         [Display(Name = "Я прекрасен")]
         [Required(ErrorMessage = "Подтвердите, что вы прекрасны")]
-        public bool? ImGorgeous { get; set; }
+        public bool ImGorgeous { get; set; }
     }
 }

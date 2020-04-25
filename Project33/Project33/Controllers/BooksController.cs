@@ -34,10 +34,19 @@ namespace Project33.Controllers
         public ActionResult Index()
         {
             return View(db.Books);
+        }
 
+        public ActionResult IndexForUsers()
+        {
+            return View(db.Books);
         }
 
         public ActionResult BookPage(int? id)
+        {
+            var b = db.Books.Find(id);
+            return View(b);
+        }
+        public ActionResult BookPageForUsers(int? id)
         {
             var b = db.Books.Find(id);
             return View(b);
@@ -55,5 +64,18 @@ namespace Project33.Controllers
 
             return View(await books.ToListAsync());
         }
+        [HttpPost]
+        public async Task<IActionResult> IndexForUsers(string searchString)
+        {
+            var books = from b in db.Books select b;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                books = books.Where(b => b.Name.Contains(searchString));
+                //books = books.Where(s => s.Author.Contains(searchString));
+            }
+
+            return View(await books.ToListAsync());
+        }
+        
     }
 }

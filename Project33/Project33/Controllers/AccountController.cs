@@ -49,7 +49,7 @@ using Microsoft.AspNetCore.Authorization;
          
                     await Authenticate(model.Email); // аутентификация
          
-                    return RedirectToAction("Index", "Books");
+                    return RedirectToAction("IndexForUsers", "Books");
                 }
                 else
                     ModelState.AddModelError("", "Некорректные логин и(или) пароль");
@@ -112,7 +112,7 @@ using Microsoft.AspNetCore.Authorization;
                     {
                         await Authenticate(model.Login); // аутентификация
      
-                        return RedirectToAction("Index", "Books");
+                        return RedirectToAction("IndexForUsers", "Books");
                     }
                     ModelState.AddModelError("", "Некорректные логин и(или) пароль");
                 }
