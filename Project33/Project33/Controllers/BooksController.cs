@@ -27,7 +27,7 @@ namespace Project33.Controllers
                 Name = b.Name,
                 Author = b.Author,
                 Genre = b.Genre,
-                description = b.description
+                Description = b.Description
             }).ToList();
         }
         

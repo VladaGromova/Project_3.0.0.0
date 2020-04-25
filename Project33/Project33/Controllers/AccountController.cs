@@ -3,13 +3,11 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
- using System.Security.Policy;
- using Project33.Models; 
+using Project33.Models; 
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
- using Microsoft.AspNetCore.Identity;
- using Project33.Data;
+using Project33.Data;
 
  namespace Project33.Controllers
 {
@@ -40,19 +38,25 @@ using Microsoft.AspNetCore.Authorization;
         {
             if (ModelState.IsValid)
             { 
-                User user = await db.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
+                User user = await db.Users.FirstOrDefaultAsync(u => u.Login == model.Login);
                 if (user == null)
                 {
-                    // добавляем пользователя в бд
-                    db.Users.Add(new User { Login = model.Login, Email = model.Email, Age = model.Age, Password = model.Password, });
-                    await db.SaveChangesAsync();
-         
-                    await Authenticate(model.Email); // аутентификация
-         
-                    return RedirectToAction("IndexForUsers", "Books");
+                    user = await db.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
+                    if (user == null)
+                    {
+                        // добавляем пользователя в бд
+                        db.Users.Add(new User {Login = model.Login, Email = model.Email, Age = model.Age, Password = model.Password,});
+                        
+                        await db.SaveChangesAsync();
+
+                        await Authenticate(model.Email); // аутентификация
+
+                        return RedirectToAction("IndexForUsers", "Books");
+                    }
+                    ModelState.AddModelError("", "Эта почта уже занята");
                 }
                 else
-                    ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+                    ModelState.AddModelError("", "Этот логин уже занят");
             }
             return View(model);
         }

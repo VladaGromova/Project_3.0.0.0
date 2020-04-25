@@ -9,6 +9,6 @@ namespace Project33.Models
         public string Name { get; set; }
         public string Author { get; set; }
         public string Genre { get; set; }
-        public string description { get; set; }
+        public string Description { get; set; }
     }
 }

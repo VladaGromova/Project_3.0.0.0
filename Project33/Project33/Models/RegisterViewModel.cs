@@ -10,6 +10,7 @@ namespace Project33.Models
         
         [Display(Name = "Email")]
         [Required(ErrorMessage ="Не указан Email")]
+        [RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Введите корректный адрес почты")]
         public string Email { get; set; }
         
         [Display(Name = "Возраст")]
@@ -18,7 +19,7 @@ namespace Project33.Models
         
         [Display(Name = "Пароль")]
         [Required(ErrorMessage = "Не указан пароль")]
-        //[RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Введите корректный адрес почты")]
+        
         [DataType(DataType.Password)]
         public string Password { get; set; }
         
