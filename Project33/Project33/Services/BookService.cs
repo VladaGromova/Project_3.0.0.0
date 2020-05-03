@@ -21,32 +21,35 @@ namespace Project33.Services
         
         public List<string> GetAuthors()
         {
-            var authors = _bookContext.Books.Select(BuildBook).Select(book => book.Author);
+            var authors = _bookContext.Books.Select(BuildBook).Select(book => book.author);
             return authors.Distinct().ToList();
         }
         
         public Books FindByName(string name)
         {
-            return _bookContext.Books.Select(BuildBook).FirstOrDefault(book => book.Name == name);
+            return _bookContext.Books.Select(BuildBook).FirstOrDefault(book => book.name == name);
         }
         
         public Books FindByAuthor(string author)
         {
-            return _bookContext.Books.Select(BuildBook).FirstOrDefault(book => book.Author == author);
+            return _bookContext.Books.Select(BuildBook).FirstOrDefault(book => book.author == author);
         }
         
         public Books FindByGenre(string genre)
         {
-            return _bookContext.Books.Select(BuildBook).FirstOrDefault(book => book.Genre == genre);
+            return _bookContext.Books.Select(BuildBook).FirstOrDefault(book => book.genre == genre);
         }
 
         private Books BuildBook(Books b)
         {
             return new Books
             {
-                Name = b.Name,
-                Author = b.Author,
-                Genre = b.Genre,
+                name = b.name,
+                author = b.author,
+                genre = b.genre,
+                description = b.description,
+                cover=b.cover,
+                likes = b.likes,
             };
         }
     }

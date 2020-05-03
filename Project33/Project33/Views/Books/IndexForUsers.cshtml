@@ -21,12 +21,12 @@
         @foreach (var b in Model)
         {
             <tr>
-                <td>@Html.ActionLink(@b.Name, "BookPageForUsers", "Books", new {id = b.Id})</td>
+                <td>@Html.ActionLink(@b.name, "BookPageForUsers", "Books", new {id = b.id})</td>
                 
                 <td>
-                    <p>@b.Author</p></td>
+                    <p>@b.author</p></td>
                 <td>
-                    <p>@b.Genre</p></td>
+                    <p>@b.genre</p></td>
 
             </tr>
         }

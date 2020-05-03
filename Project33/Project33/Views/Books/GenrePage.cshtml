@@ -1,8 +1,11 @@
-﻿@model IEnumerable<Project33.Services.Models.Books>
+﻿@model List<Project33.Services.Models.Books>
+
 @{
+    ViewBag.Title = "title";
     Layout = "_MainPageLayout";
 }
-  
+
+<h2>Книги выбанного жанра:</h2>
 <!DOCTYPE html>
   
 <html>
@@ -12,21 +15,16 @@
 </head>
 <body>
 <div>
-    <h3>Книги:</h3>
     <table>
         <tr><td><p>Название книги</p></td>
             <td><p>Автор</p></td>
-            <td><p>Жанр</p></td>
         </tr>
         @foreach (var b in Model)
         {
             <tr>
                 <td>@Html.ActionLink(@b.name, "BookPage", "Books", new {id = b.id})</td>
-                
                 <td>
                     <p>@b.author</p></td>
-                <td>
-                    <p>@b.genre</p></td>
             </tr>
         }
     </table>
@@ -54,4 +52,3 @@
 </div>
 </body>
 </html>
-

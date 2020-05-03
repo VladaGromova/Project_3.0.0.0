@@ -1,9 +1,40 @@
-﻿@model Project33.Services.Models.Books
+﻿@using Project33.Services.Models
+@using System.Web.Mvc.Ajax
+@model Project33.Services.Models.Books
 
 @{
     ViewBag.Title = "title";
     Layout = "_UserPageLayout";
 }
 
-<h3>@Html.DisplayFor(model=>model.Name)</h3>
-    <td><p>@Html.DisplayFor(model=>model.Description)</p></td>
+<h3>@Html.DisplayFor(model=>model.name)</h3>
+<td><p>@Html.DisplayFor(model=>model.description)</p></td>
+<td>Лайки:</td>
+
+<div class="likes">@Model.likes</div>
+
+<input type="button" class="btn" id="Clc" value="like" onclick="dawn(this)">
+
+<script type="text/javascript">
+function dawn(input)
+    {
+    input.value =   input.value != 'unlike' ?  'unlike' : 'like'
+    }
+const btn = document.querySelector('.btn');
+let like = true,
+  likeCount = document.querySelector('.likes').innerHTML; // get num of likes
+btn.addEventListener('click', () => {
+  likeCount = like ? ++likeCount : --likeCount;
+  like = !like;
+  document.querySelector('.likes').innerHTML = likeCount;
+  $.ajax({
+  url: '@Url.Action("UpdateBooksLikes", "Books")',
+  type: 'POST',
+  data:{
+      number: likeCount,
+      bookId: @Model.id
+  }
+  })
+});
+</script>
+

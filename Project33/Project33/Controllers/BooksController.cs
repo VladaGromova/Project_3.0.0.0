@@ -8,6 +8,7 @@ using Project33.Services.Models;
 using ActionResult = Microsoft.AspNetCore.Mvc.ActionResult;//System.Web.Mvc.ActionResult
 using Controller = Microsoft.AspNetCore.Mvc.Controller;
 using Project33.Data;
+using Microsoft.AspNet.Identity;
 
 namespace Project33.Controllers
 {
@@ -21,11 +22,13 @@ namespace Project33.Controllers
             _booksContext = new BooksContext();
             return _booksContext.Books.Select(b => new Books()
             {
-                Id = b.Id,
-                Name = b.Name,
-                Author = b.Author,
-                Genre = b.Genre,
-                Description = b.Description
+                id = b.id,
+                name = b.name,
+                author = b.author,
+                genre = b.genre,
+                description = b.description,
+                cover = b.cover,
+                likes = b.likes
             }).ToList();
         }
         
@@ -50,14 +53,21 @@ namespace Project33.Controllers
             return View(b);
         }
 
+        public ActionResult GenrePage(string? genre)
+        {
+            var books = from b in db.Books select b;
+            books = books.Where(b => b.genre.Contains(genre));
+            return View(books.ToList());
+
+        }
+
         [HttpPost]
         public async Task<IActionResult> Index(string searchString)
         {
             var books = from b in db.Books select b;
             if (!String.IsNullOrEmpty(searchString))
             {
-                books = books.Where(b => b.Name.Contains(searchString));
-                //books = books.Where(s => s.Author.Contains(searchString));
+                books = books.Where(b => b.name.Contains(searchString));
             }
 
             return View(await books.ToListAsync());
@@ -68,12 +78,23 @@ namespace Project33.Controllers
             var books = from b in db.Books select b;
             if (!String.IsNullOrEmpty(searchString))
             {
-                books = books.Where(b => b.Name.Contains(searchString));
-                //books = books.Where(s => s.Author.Contains(searchString));
+                books = books.Where(b => b.name.Contains(searchString));
             }
 
             return View(await books.ToListAsync());
         }
-        
+
+        [HttpPost]
+        public async void UpdateBooksLikes(int number, int bookId)
+        {
+            Books b = db.Books.FirstOrDefault(b => b.id == bookId);
+            b.likes = number;
+            db.SaveChanges();
+            db.SaveChangesAsync();
+            
+            UserContext user_db = new UserContext();
+            var userName = User.Identity.GetUserName();
+            User user = await user_db.Users.FirstOrDefaultAsync(x => x.Login == userName);
+        }
     }
 }
