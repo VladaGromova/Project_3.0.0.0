@@ -10,6 +10,10 @@ namespace Project33.Data
         public CommentContext(DbContextOptions<CommentContext> options)
             : base(options)
         {
+        }
+        
+        public CommentContext()
+        {
             Database.EnsureCreated();
         }
         

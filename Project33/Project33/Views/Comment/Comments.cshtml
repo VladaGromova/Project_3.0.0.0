@@ -1,0 +1,19 @@
+﻿﻿@using Microsoft.AspNet.Identity
+@using Project33.Data
+@model IEnumerable<Project33.Services.Models.Comment>
+@{
+    Layout = null;
+}
+@{
+    UserContext user_db = new UserContext();
+}
+<ul class="list-group">
+    @foreach (var comment in Model)
+    {
+        <li class="list-group-item">
+            <tr>@user_db.Users.Find(comment.UserId).Login</tr>
+            <tr>@comment.Text</tr>
+            <tr>@comment.CreatedDate</tr>
+        </li>
+    }
+</ul>

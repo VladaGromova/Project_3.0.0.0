@@ -38,3 +38,36 @@ btn.addEventListener('click', () => {
 });
 </script>
 
+<div>
+    <textarea id="textData" placeholder="Введите комментарий..." cols="90" rows="3"></textarea>
+</div>
+<div>
+    <button id="sendComment" class="btn btn-dark">Комментировать</button>
+</div>
+
+@section Scripts{
+    <script>
+    $('#sendComment').on('click', function() {
+          $.ajax({
+              url:'https://localhost:5001/Comment/MakeComment',
+              type:'POST',
+              data: {
+                   text: $('#textData').val(),
+                   number: @Model.id
+              }
+            })
+        })
+       
+ $.ajax({
+       url:'https://localhost:5001/Comment/Comments',
+       data: {
+            number: @Model.id
+       },
+       success: function(responseText){
+         /* responseText - данные, полученные от сервера */
+              $('body').append("<span>" + responseText + "</span>");
+       }
+     })
+     
+</script>
+}
