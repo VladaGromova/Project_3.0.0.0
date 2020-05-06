@@ -9,6 +9,8 @@ using ActionResult = Microsoft.AspNetCore.Mvc.ActionResult;//System.Web.Mvc.Acti
 using Controller = Microsoft.AspNetCore.Mvc.Controller;
 using Project33.Data;
 using Microsoft.AspNet.Identity;
+using Project33.Services;
+using Project33.Controllers;
 
 namespace Project33.Controllers
 {
@@ -55,10 +57,10 @@ namespace Project33.Controllers
 
         public ActionResult GenrePage(string? genre)
         {
+            BookService bookService=new BookService();
             var books = from b in db.Books select b;
             books = books.Where(b => b.genre.Contains(genre));
             return View(books.ToList());
-
         }
 
         [HttpPost]
@@ -83,18 +85,51 @@ namespace Project33.Controllers
 
             return View(await books.ToListAsync());
         }
+        
 
         [HttpPost]
         public async void UpdateBooksLikes(int number, int bookId)
         {
-            Books b = db.Books.FirstOrDefault(b => b.id == bookId);
-            b.likes = number;
-            db.SaveChanges();
-            db.SaveChangesAsync();
             
             UserContext user_db = new UserContext();
             var userName = User.Identity.GetUserName();
-            User user = await user_db.Users.FirstOrDefaultAsync(x => x.Login == userName);
+            User user = await user_db.Users.FirstOrDefaultAsync(x => x.Login == userName); // UserId found
+            
+            LikesContext likes_db = new LikesContext();
+            var num_of_likes = likes_db.Likes.ToArray().Length;
+
+            if (likes_db.Likes.FirstOrDefault(i =>(i.user_id== user.Id)&&(i.book_id==bookId)) == null)
+            {
+                // если в бд лайков не найден ни один лайк от пользователя
+                Likes like = new Likes()
+                {
+                    id = (++num_of_likes),
+                    book_id = bookId,
+                    user_id = user.Id
+                };
+
+                likes_db.Likes.Add(like);
+                
+                Books b1 = db.Books.FirstOrDefault(b1 => b1.id == bookId);
+                b1.likes = number;
+            }
+            else
+            {
+                // в бд лайков есть лайк ИЛИ ЛАЙКИ от пользователя на заданную книгу
+
+                var like_to_remove = likes_db.Likes.FirstOrDefault(i => (i.user_id == user.Id) && (i.book_id == bookId));
+                likes_db.Remove(like_to_remove);
+                
+                Books b2 = db.Books.FirstOrDefault(b2 => b2.id == bookId);
+                b2.likes = (number-2);
+            }
+            
+
+            Books b = db.Books.FirstOrDefault(b => b.id == bookId);
+            b.likes = number;
+            //db.SaveChanges();
+            await db.SaveChangesAsync();
+            await likes_db.SaveChangesAsync();
         }
     }
 }
