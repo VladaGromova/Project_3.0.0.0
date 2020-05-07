@@ -9,6 +9,7 @@
     }
 </style>
 <head>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@ViewData["Title"] - Project</title>
@@ -17,8 +18,8 @@
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3" style="background: #f1d8b9; z-index: 1">
-        <div class="container">
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3" style="background: #f1d8b9; position: fixed; width: 100%; z-index: 10">
+        <div class="container" style="width:100%; margin: 0">
             <a class="navbar-brand" asp-area="" asp-controller="Books" asp-action="Index">
                 <img src="Assets/UPProjectLogo1.png" alt="Лого" width="50"/>
             </a>
@@ -31,26 +32,26 @@
                      <a class="navbar-brand" asp-area="" asp-controller="Books" asp-action="Index">
                          <img src="Assets/UPProjectName.png" alt="Название" height="45"/>
                      </a>
-                    <form asp-controller="Books" asp-action="Index">
-                        <p>
-                            <H1 style="font-size: 15pt">Поиск по названию:
-                            <input type="text" name="SearchString" style="border-radius: 20px 0 0 20px;" >
-                            <input type="submit" value="Найти" style="border-radius: 0 20px 20px 0;"/>
-                            </H1>
-                        </p>
+                    <form asp-controller="Books" asp-action="Index" class="form-inline my-2 my-lg-0">
+                          <input class="form-control mr-sm-2" type="search" placeholder="Поиск по названию" aria-label="Search" style="border-radius: 20px 0 0 20px">
+                          <button class="btn btn-outline-danger my-2 my-sm-0" type="submit" style="border-radius: 0 20px 20px 0">
+                              <i class="fa fa-search"></i>
+                          </button>
                     </form>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login" style="font-family: Alice; color: #550008">Вход</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register" style="font-family: Alice; color: #550008">Регистрация</a>
-                    </li>
+                    <ul style="list-style-type: none; line-height: 5px">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login" style="font-family: Alice; font-size: 15pt; color: #550008">Вход</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register" style="font-family: Alice; font-size: 15pt; color: #550008">Регистрация</a>
+                        </li>
+                    </ul>
                 </ul>
             </div>
         </div>
     </nav>
 </header>
-<div class="container">
+<div class="container" style="margin: 0">
     <main role="main" class="pb-3">
         @RenderBody()
     </main>
@@ -67,4 +68,6 @@
 @RenderSection("Scripts", required: false)
 </body>
 </html>
+
+
 

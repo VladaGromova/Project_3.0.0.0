@@ -13,17 +13,23 @@
   </script>
 <style>
    body { background: #f5ebdc;}
+   main {
+       width: 100%;
+       height: 100%;
+       padding: 0;
+       margin-top: 0;
+       }
    aside {
    height: 100%; /* Full-height: remove this if you want "auto" height */
        width: 250px; /* Set the width of the sidebar */ 
        position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-       top: 85px; /* Stay at the top */
+       top: 0; /* Stay at the top */
        right: 0;
        background-color: #e0cbb1; 
        overflow-x: hidden; /* Disable horizontal scroll */
        overflow-y: auto;
        padding-top: 20px;
-       z-index: 2;
+       z-index: 0;
    }
    a.font_color {
    color: #550008;
@@ -49,38 +55,44 @@
          font-family: Alice;
          color: #550008;
         }
+   .books_article {
+           padding-top: 70px;
+           padding-left: 10px;
+           padding-right: 270px;
+       }
 </style>
 <head>
     <meta name="viewport" content="width=device-width"/>
     <title>Книжный мир</title>@*@Url.Content("~/Content/Site.css")*@
 </head>
 <body>
-<div>
-    <h3>Книги:</h3>
-    <table>
-        <tr>
-            <td>
-                <p>Название книги</p></td>
-            <td>
-                <p>Автор</p></td>
-            <td>
-                <p>Жанр</p></td>
-        </tr>
-        @foreach (var b in Model)
-        {
+<main>
+    <article class="books_article">
+        <table>
             <tr>
-                <td>@Html.ActionLink(@b.name, "BookPage", "Books", new {id = b.id}, new {@class="font_color"})</td>
-
                 <td>
-                    <p>@b.author</p></td>
+                    <p>Название книги</p></td>
                 <td>
-                    <p>@b.genre</p></td>
+                    <p>Автор</p></td>
+                <td>
+                    <p>Жанр</p></td>
             </tr>
-        }
-    </table>
-</div>
+            @foreach (var b in Model)
+            {
+                <tr>
+                    <td>@Html.ActionLink(@b.name, "BookPage", "Books", new {id = b.id}, new {@class="font_color"})</td>
+
+                    <td>
+                        <p>@b.author</p></td>
+                    <td>
+                        <p>@b.genre</p></td>
+                </tr>
+            }
+        </table>
+    </article>
+</main>
 <aside>
-    <div id="menu-menu-css" class="genres">
+    <div id="menu-menu-css" class="genres" style="padding-top: 70px">
         <h2 class="block_title" style="padding: 20px; ">
             <p class="font_color">Жанры</p>
         </h2>
