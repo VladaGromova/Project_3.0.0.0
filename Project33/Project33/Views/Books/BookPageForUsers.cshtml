@@ -57,6 +57,7 @@ btn.addEventListener('click', () => {
               },   
               success: function(responseText){ 
                    $('body').append("<span>" + responseText + "</span>");
+                   document.getElementById("textData").value = "";
               }  
             })
         })
