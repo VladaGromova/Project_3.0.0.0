@@ -15,7 +15,8 @@ namespace Project33.Controllers
     {
         CommentContext com_db = new CommentContext();
         UserContext user_db = new UserContext();
-
+        BooksContext book_db = new BooksContext();
+        
         public ActionResult Comments(PostDataModel bookId)
         {
             IEnumerable<Comment> comments = com_db.Comments.Where(comments => comments.BookId == bookId.Number);
@@ -23,18 +24,18 @@ namespace Project33.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> MakeComment(PostDataModel model)
+        public async Task<ActionResult> NewComment(PostDataModel model)
         {
-            
             var userName = User.Identity.GetUserName();
             User user = await user_db.Users.FirstOrDefaultAsync(x => x.Login == userName);
             
-            com_db.Comments.Add(new Comment { BookId = model.Number, UserId = user.Id, Text = model.Text, CreatedDate = DateTime.Now});
+            Comment newComment = new Comment { BookId = model.Number, UserId = user.Id, Text = model.Text, CreatedDate = DateTime.Now};
+            
+            com_db.Comments.Add(newComment);
                         
             await com_db.SaveChangesAsync();
 
-            return RedirectToAction("Index", "Home");
+            return View(newComment);
         }
-        
     } 
 }

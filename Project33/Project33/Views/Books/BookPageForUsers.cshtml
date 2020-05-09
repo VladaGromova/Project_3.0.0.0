@@ -49,25 +49,28 @@ btn.addEventListener('click', () => {
     <script>
     $('#sendComment').on('click', function() {
           $.ajax({
-              url:'https://localhost:5001/Comment/MakeComment',
+              url:'@Url.Action("NewComment", "Comment")',
               type:'POST',
               data: {
                    text: $('#textData').val(),
                    number: @Model.id
-              }
+              },   
+              success: function(responseText){ 
+                   $('body').append("<span>" + responseText + "</span>");
+              }  
             })
         })
-       
- $.ajax({
-       url:'https://localhost:5001/Comment/Comments',
-       data: {
+          
+    $.ajax({
+        url:'@Url.Action("Comments", "Comment")',
+        type: "GET",
+        data: {
             number: @Model.id
-       },
-       success: function(responseText){
+        },
+        success: function(responseText){
          /* responseText - данные, полученные от сервера */
-              $('body').append("<span>" + responseText + "</span>");
-       }
-     })
-     
+            $('body').append("<span>" + responseText + "</span>");
+        }
+    })
 </script>
 }

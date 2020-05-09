@@ -1,0 +1,15 @@
+﻿@using Project33.Data
+@model Project33.Services.Models.Comment
+@{
+    Layout = null;
+}
+
+@{
+    UserContext user_db = new UserContext();
+}
+
+<li class="list-group-item">
+    <tr>@user_db.Users.Find(Model.UserId).Login</tr>
+    <tr>@Model.Text</tr>
+    <tr>@Model.CreatedDate</tr>
+</li>
