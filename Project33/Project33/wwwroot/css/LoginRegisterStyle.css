@@ -1,0 +1,41 @@
+﻿body{
+    background: #f5ebdc;;
+}
+label{
+    font-family: Alice;
+    color: #550008;
+}
+h2{
+    font-family: Alice;
+    color: #550008;
+}
+a.font_color {
+    color: #550008;
+    font-family: Alice;
+}
+a.font_color:active {
+    color: #913039;
+    font-family: Alice;
+}
+a.font_color:link {
+    color: #550008;
+    font-family: Alice;
+}
+a.font_color:visited {
+    color: #240004;
+    font-family: Alice;
+}
+.center_div{
+    background: #2c1609 url("../Assets/UPProjectLoginRegister.jpg");
+    border-radius: 20px;
+    position:absolute;
+    width: 304px;
+    height: 244px;
+    top: 50%;
+    left: 50%;
+    margin: -122px 0 0 -152px;
+}
+input {
+    right: 0;
+    border-radius: 10px;
+}
