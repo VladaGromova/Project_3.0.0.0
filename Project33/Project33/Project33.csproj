@@ -16,6 +16,7 @@
 
     <ItemGroup>
       <PackageReference Include="EntityFramework" Version="6.4.0" />
+      <PackageReference Include="Microsoft.AspNet.Identity.Core" Version="2.2.3" />
       <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.7" />
       <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.0-preview2" />
       <PackageReference Include="OwinRequestScopeContext" Version="1.0.1" />
