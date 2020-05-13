@@ -49,11 +49,34 @@ namespace Project33.Controllers
             var b = db.Books.Find(id);
             return View(b);
         }
-        public ActionResult BookPageForUsers(int? id)
+        public async Task<IActionResult> BookPageForUsers(int? id)
         {
-            var b = db.Books.Find(id);
+            UserContext user_db = new UserContext();
+            var userName = User.Identity.GetUserName();
+            User user = await user_db.Users.FirstOrDefaultAsync(x => x.Login == userName); // UserId found
+            
+            LikesContext likes_db = new LikesContext();
+            var num_of_likes = likes_db.Likes.ToArray().Length;
+
+            Books b = db.Books.FirstOrDefault(b => b.id == id);
+            if (likes_db.Likes.FirstOrDefault(i => (i.user_id == user.Id) && (i.book_id == id)) == null)
+            {
+                return View(b);
+            }
+            else
+            {
+                return RedirectToAction("LikedBookPageForUsers", "Books", new{b_id = id});
+            }
+        }
+
+        public IActionResult LikedBookPageForUsers(int b_id)
+        {
+            
+            var b = db.Books.Find(b_id);
             return View(b);
         }
+        
+        
 
         public ActionResult GenrePage(string? genre)
         {
@@ -85,7 +108,61 @@ namespace Project33.Controllers
 
             return View(await books.ToListAsync());
         }
+
+        [HttpPost]
+        public async void ToLike(int num_of_likes, int bookId)
+        {
+            UserContext user_db = new UserContext();
+            var userName = User.Identity.GetUserName();
+            User user = await user_db.Users.FirstOrDefaultAsync(x => x.Login == userName); // UserId found
+
+            LikesContext likes_db = new LikesContext();
+            var real_num_of_likes = likes_db.Likes.ToArray().Length;
+
+            Books b = db.Books.FirstOrDefault(b => b.id == bookId);
+                // если в бд лайков не найден ни один лайк от пользователя
+                Likes like = new Likes()
+                {
+                    id = (++real_num_of_likes),
+                    book_id = bookId,
+                    user_id = user.Id
+                };
+
+                likes_db.Likes.Add(like);
+                
+                b.likes = num_of_likes;
+
+                await db.SaveChangesAsync();
+            await likes_db.SaveChangesAsync(); 
+        }
+
+        [HttpPost]
+        public async void ToUnLike(int num_of_likes, int bookId)
+        {
+            
+            UserContext user_db = new UserContext();
+            var userName = User.Identity.GetUserName();
+            User user = await user_db.Users.FirstOrDefaultAsync(x => x.Login == userName); // UserId found
+
+            LikesContext likes_db = new LikesContext();
+            var real_num_of_likes = likes_db.Likes.ToArray().Length;
+
+            Books b = db.Books.FirstOrDefault(b => b.id == bookId);
+            
+            var like_to_remove = likes_db.Likes.FirstOrDefault(i => (i.user_id == user.Id) && (i.book_id == bookId));
+            likes_db.Remove(like_to_remove);
+                
+            //Books b = db.Books.FirstOrDefault(b => b.id == bookId);
+            b.likes = --num_of_likes;
         
+            
+
+        //Books b = db.Books.FirstOrDefault(b => b.id == bookId);
+        //b.likes = number;
+        //db.SaveChanges();
+        await db.SaveChangesAsync();
+        await likes_db.SaveChangesAsync(); 
+        }
 
         [HttpPost]
         public async void UpdateBooksLikes(int number, int bookId)
@@ -98,6 +175,7 @@ namespace Project33.Controllers
             LikesContext likes_db = new LikesContext();
             var num_of_likes = likes_db.Likes.ToArray().Length;
 
+                Books b = db.Books.FirstOrDefault(b => b.id == bookId);
             if (likes_db.Likes.FirstOrDefault(i =>(i.user_id== user.Id)&&(i.book_id==bookId)) == null)
             {
                 // если в бд лайков не найден ни один лайк от пользователя
@@ -110,26 +188,26 @@ namespace Project33.Controllers
 
                 likes_db.Likes.Add(like);
                 
-                Books b1 = db.Books.FirstOrDefault(b1 => b1.id == bookId);
-                b1.likes = number;
+                b.likes = number;
             }
             else
             {
-                // в бд лайков есть лайк ИЛИ ЛАЙКИ от пользователя на заданную книгу
+                // в бд лайков есть лайк от пользователя на заданную книгу
 
                 var like_to_remove = likes_db.Likes.FirstOrDefault(i => (i.user_id == user.Id) && (i.book_id == bookId));
                 likes_db.Remove(like_to_remove);
                 
-                Books b2 = db.Books.FirstOrDefault(b2 => b2.id == bookId);
-                b2.likes = (number-2);
+                //Books b = db.Books.FirstOrDefault(b => b.id == bookId);
+                b.likes = (number-2);
             }
             
 
-            Books b = db.Books.FirstOrDefault(b => b.id == bookId);
-            b.likes = number;
+            //Books b = db.Books.FirstOrDefault(b => b.id == bookId);
+            //b.likes = number;
             //db.SaveChanges();
             await db.SaveChangesAsync();
-            await likes_db.SaveChangesAsync();
+            await likes_db.SaveChangesAsync(); 
+            //return b.likes;
         }
     }
 }
