@@ -12,19 +12,19 @@
 <td>Лайки:</td>
 <div id="likes">@Model.likes</div>
 
-<input type="button" class="btn" id="like" name="like" value="like" onclick="foo()"/>
+<input type="button" class="btn" id="like" name="like" value="unlike" onclick="ffoo()"/>
 
 <script>
 
 likeCount = @Model.likes
 
-function foo() {
+function ffoo() {
     if(document.getElementById("like").value=="like")
     {
         var a=Number(@Model.likes);
   document.getElementById("like").value = "unlike";
   var p = document.getElementById('likes');
- p.innerHTML = ++a;
+ p.innerHTML = a;
            $.ajax({
                url:'@Url.Action("ToLike", "Books")',
                type:'POST',
@@ -39,16 +39,15 @@ function foo() {
             var a=Number(@Model.likes);
         document.getElementById("like").value = "like";
         var p = document.getElementById('likes');
-       p.innerHTML = a;
-       
-           $.ajax({
-               url:'@Url.Action("ToUnLike", "Books")',
-               type:'POST',
-               data: {
-                    num_of_likes: a,
-                    bookId: @Model.id
-               }
-             })
+       p.innerHTML = --a;
+        $.ajax({
+                      url:'@Url.Action("ToUnLike", "Books")',
+                      type:'POST',
+                      data: {
+                           num_of_likes: a,
+                           bookId: @Model.id
+                      }
+                    })
     }
 }
 </script>
