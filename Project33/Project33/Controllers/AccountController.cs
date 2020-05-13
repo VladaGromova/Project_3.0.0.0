@@ -3,7 +3,8 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using Project33.Models; 
+ using Microsoft.AspNet.Identity;
+ using Project33.Models; 
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -25,6 +26,39 @@ using Project33.Services.Models;
         public AccountController(UserContext context)
         {
             db = context;
+        }
+
+        public async Task<IActionResult> Edit()
+        {
+            var userName = User.Identity.GetUserName();
+            User user = await db.Users.FirstOrDefaultAsync(x => x.Login == userName);
+            
+            EditUserViewModel model = new EditUserViewModel {/*Id = user.Id,*/ Login = user.Login, Age = user.Age };
+            return View(model);
+        }
+ 
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditUserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var userName = User.Identity.GetUserName();
+                User user = await db.Users.FirstOrDefaultAsync(x => x.Login == userName);
+                
+                User user_already_exist = await db.Users.FirstOrDefaultAsync(u => u.Login == model.Login);
+                if (user_already_exist == null)
+                {
+                    user.Login = model.Login;
+                    user.Age = model.Age;
+                    
+                    await db.SaveChangesAsync();
+                    
+                    //db.Users.Update(user);
+                }
+                ModelState.AddModelError("", "Этот логин уже занят");
+
+            }
+            return RedirectToAction("IndexForUsers", "Books");
         }
         
         [HttpGet]
