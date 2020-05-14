@@ -11,13 +11,13 @@
 <td><p>@Html.DisplayFor(model=>model.description)</p></td>
 <td>Лайки:</td>
 <div id="likes">@Model.likes</div>
-
 <input type="button" class="btn" id="like" name="like" value="unlike" onclick="ffoo()"/>
 
+<div id="favorites">Add book to your favorites!</div>
+<input type="button" class="btn" id="favor" name="favor" value="ToFavor" onclick="boo()"/>
+
 <script>
-
 likeCount = @Model.likes
-
 function ffoo() {
     if(document.getElementById("like").value=="like")
     {
@@ -52,6 +52,33 @@ function ffoo() {
 }
 </script>
 
+<script>
+function boo() {
+    if(document.getElementById("favor").value=="ToFavor")
+    {
+  document.getElementById("favor").value = "DeleteFavor";
+  document.getElementById("favorites").innerHTML = 'BookAddedToFavors!';
+           $.ajax({
+               url:'@Url.Action("ToFavor", "Books")',
+               type:'POST',
+               data: {
+                    bookId: @Model.id
+               }
+             })
+    } else 
+        {
+        document.getElementById("favor").value = "ToFavor";
+  document.getElementById("favorites").innerHTML = 'BookDeletedFromFavors!';
+           $.ajax({
+               url:'@Url.Action("DeleteFavor", "Books")',
+               type:'POST',
+               data: {
+                    bookId: @Model.id
+               }
+             })
+    }
+}
+</script>
 
 <div>
     <textarea id="textData" placeholder="Введите комментарий..." cols="90" rows="3"></textarea>
