@@ -52,13 +52,15 @@ using Project33.Services.Models;
                     user.Age = model.Age;
                     
                     await db.SaveChangesAsync();
+                    db.Users.UpdateRange();
                     
-                    //db.Users.Update(user);
+                    db.Users.Update(user);
+                    
+                    return RedirectToAction("Login", "Account");
                 }
                 ModelState.AddModelError("", "Этот логин уже занят");
-
             }
-            return RedirectToAction("IndexForUsers", "Books");
+            return View(model);
         }
         
         [HttpGet]
