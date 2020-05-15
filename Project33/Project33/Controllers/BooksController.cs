@@ -54,6 +54,8 @@ namespace Project33.Controllers
             UserContext user_db = new UserContext();
             var userName = User.Identity.GetUserName();
             User user = await user_db.Users.FirstOrDefaultAsync(x => x.Login == userName); // UserId found
+
+            FavoritesContext favor_db = new FavoritesContext();
             
             LikesContext likes_db = new LikesContext();
             var num_of_likes = likes_db.Likes.ToArray().Length;
@@ -61,15 +63,47 @@ namespace Project33.Controllers
             Books b = db.Books.FirstOrDefault(b => b.id == id);
             if (likes_db.Likes.FirstOrDefault(i => (i.user_id == user.Id) && (i.book_id == id)) == null)
             {
+                //не поставлен лайк
+                if (favor_db.Favorites.FirstOrDefault(f => (f.user_id==user.Id))==null){
+                    // нет лайка нет избранного
                 return View(b);
+                }
+                else
+                {
+                    // нет лайка есть избранное
+                    return RedirectToAction("FavoredBookPageForUsers", "Books", new{b_id = id});
+                }
             }
             else
             {
+                // поставлен лайк
+                if (favor_db.Favorites.FirstOrDefault(f => (f.user_id==user.Id))!=null)
+                {
+                    //поставлен лайк есть избранное
+                    return RedirectToAction("LikedFavoredBookPageForUsers", "Books", new{b_id = id});
+                    
+                }
+
+                // поставлен лайк нет избранного
                 return RedirectToAction("LikedBookPageForUsers", "Books", new{b_id = id});
             }
         }
 
         public IActionResult LikedBookPageForUsers(int b_id)
+        {
+            
+            var b = db.Books.Find(b_id);
+            return View(b);
+        }
+        
+        public IActionResult LikedFavoredBookPageForUsers(int b_id)
+        {
+            
+            var b = db.Books.Find(b_id);
+            return View(b);
+        }
+        
+        public IActionResult FavoredBookPageForUsers(int b_id)
         {
             
             var b = db.Books.Find(b_id);
@@ -110,6 +144,28 @@ namespace Project33.Controllers
         }
 
         [HttpPost]
+        public async void ToFavor(int bookId)
+        {
+            UserContext user_db = new UserContext();
+            var userName = User.Identity.GetUserName();
+            User user = await user_db.Users.FirstOrDefaultAsync(x => x.Login == userName); // UserId found
+
+            FavoritesContext _db = new FavoritesContext();
+            var real_num_of_favs = _db.Favorites.ToArray().Length;
+            
+            Books b = db.Books.FirstOrDefault(b => b.id == bookId);
+
+            Favorites fav = new Favorites()
+            {
+                id = (++real_num_of_favs),
+                book_id = bookId,
+                user_id = user.Id
+            };
+            _db.Favorites.Add(fav);
+            await _db.SaveChangesAsync();    
+        }
+
+        [HttpPost]
         public async void ToLike(int num_of_likes, int bookId)
         {
             UserContext user_db = new UserContext();
@@ -137,6 +193,23 @@ namespace Project33.Controllers
         }
 
         [HttpPost]
+        public async void DeleteFavor(int bookId)
+        {
+            UserContext user_db = new UserContext();
+            var userName = User.Identity.GetUserName();
+            User user = await user_db.Users.FirstOrDefaultAsync(x => x.Login == userName); // UserId found
+
+            FavoritesContext _db = new FavoritesContext();
+            var real_num_of_favs = _db.Favorites.ToArray().Length;
+
+            Books b = db.Books.FirstOrDefault(b => b.id == bookId);
+            
+            var favor_to_remove = _db.Favorites.FirstOrDefault(i => (i.user_id == user.Id) && (i.book_id == bookId));
+            _db.Remove(favor_to_remove);
+            await _db.SaveChangesAsync(); 
+        }
+
+        [HttpPost]
         public async void ToUnLike(int num_of_likes, int bookId)
         {
             
@@ -152,14 +225,8 @@ namespace Project33.Controllers
             var like_to_remove = likes_db.Likes.FirstOrDefault(i => (i.user_id == user.Id) && (i.book_id == bookId));
             likes_db.Remove(like_to_remove);
                 
-            //Books b = db.Books.FirstOrDefault(b => b.id == bookId);
             b.likes = --num_of_likes;
         
-            
-
-        //Books b = db.Books.FirstOrDefault(b => b.id == bookId);
-        //b.likes = number;
-        //db.SaveChanges();
         await db.SaveChangesAsync();
         await likes_db.SaveChangesAsync(); 
         }
