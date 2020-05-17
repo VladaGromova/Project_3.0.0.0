@@ -3,7 +3,8 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using Project33.Models; 
+ using Microsoft.AspNet.Identity;
+ using Project33.Models; 
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -25,6 +26,63 @@ using Project33.Services.Models;
         public AccountController(UserContext context)
         {
             db = context;
+        }
+
+        public async Task<IActionResult> Edit()
+        {
+            var userName = User.Identity.GetUserName();
+            User user = await db.Users.FirstOrDefaultAsync(x => x.Login == userName);
+            
+            EditViewModel model = new EditViewModel {Login = user.Login, Age = user.Age};
+            return View(model);
+        }
+ 
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var userName = User.Identity.GetUserName();
+                User user = await db.Users.FirstOrDefaultAsync(x => x.Login == userName);
+                
+                if (model.OldPassword != user.Password && model.OldPassword != null)
+                {
+                    ModelState.AddModelError("", "Пароль введен неверно");
+                    return View(model);
+                }
+
+                if (model.OldPassword == null && model.NewPassword != null)
+                {
+                    ModelState.AddModelError("", "Для смены пароля введите старый пароль");
+                    return View(model);
+                }
+                
+                /*if (model.OldPassword == user.Password && model.NewPassword == null)
+                {
+                    ModelState.AddModelError("", "Пароль не может быть равен ничего!");
+                    return View(model);
+                }*/
+
+                User userAlreadyExist = await db.Users.FirstOrDefaultAsync(u => u.Login == model.Login);
+                if (userAlreadyExist == null || model.Login == user.Login)
+                {
+                    user.Login = model.Login;
+                    user.Age = model.Age;
+
+                    if (model.NewPassword != null)
+                    {
+                        user.Password = model.NewPassword;
+                    }
+                    
+                    await db.SaveChangesAsync();
+
+                    await Authenticate(model.Login);
+
+                    return RedirectToAction("IndexForUsers", "Books");
+                }
+                ModelState.AddModelError("", "Этот логин уже занят");
+            }
+            return View(model);
         }
         
         [HttpGet]
