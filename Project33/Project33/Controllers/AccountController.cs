@@ -128,7 +128,9 @@ using Project33.Services.Models;
             [HttpGet]
             public IActionResult ProfilePageFromLayout()
             {
-                return RedirectToAction("ProfilePage", "Account");
+                //return RedirectToAction("ProfilePage", "Account");
+                return RedirectToAction("Login", "Account");
+                
             }
             
             [HttpPost]
@@ -210,7 +212,7 @@ using Project33.Services.Models;
             // установка аутентификационных куки
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
         }
-
+/*
 
         public async Task<IActionResult> ProfilePage()
         {
@@ -240,5 +242,6 @@ using Project33.Services.Models;
             
             return View(userActionsInfo);
         }
+        */
     }
 }
