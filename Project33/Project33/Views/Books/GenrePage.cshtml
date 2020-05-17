@@ -8,53 +8,62 @@
 
 <h2>Книги выбанного жанра:</h2>
 <!DOCTYPE html>
-  
+ 
 <html>
+    <link rel="stylesheet" type="text/css" href="~/css/BooksIndexStyle.css">
 <head>
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width"/>
     <title>Книжный мир</title>@*@Url.Content("~/Content/Site.css")*@
 </head>
 <body>
-<div>
-    <table>
-        <tr><td><p>Название книги</p></td>
-            <td><p>Автор</p></td>
-        </tr>
-        @foreach (var b in Model)
-        {
-            <tr>
-                <td>@Html.ActionLink(@b.name, "BookPage", "Books", new {id = b.id})</td>
-                <td>
-                    <p>@b.author</p></td>
-            </tr>
-        }
-    </table>
-</div>
+<main>
+    <article class="books_article">
+        <div>
+            <table>
+                <tr>
+                    <td>
+                        <p>Название книги</p></td>
+                    <td>
+                        <p>Автор</p></td>
+                </tr>
+                @foreach (var b in Model)
+                {
+                    <tr>
+                        <td>@Html.ActionLink(@b.name, "BookPage", "Books", new {id = b.id})</td>
+                        <td>
+                            <p>@b.author</p></td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </article>
+</main>
+
 <aside>
-    <div id="menu-menu-css" class="genres">
+    <div id="menu-menu-css" class="genres" style="padding-top: 70px">
         <h2 class="block_title" style="padding: 20px; ">
             <p class="font_color">Жанры</p>
         </h2>
         <div class="block_content scroll jspScrolltable" style="overflow: hidden; width: 100%;" tabindex="0">
             <ul>
-                    <li>@Html.ActionLink("фантастика", "GenrePage", "Books", new { genre = "фантастика"}, new {@class="font_color"})</li>
-                    <li>@Html.ActionLink("фэнтези", "GenrePage", "Books", new { genre = "фэнтези"}, new {@class="font_color"})</li>
-                    <li>@Html.ActionLink("детективы и триллеры", "GenrePage", "Books", new { genre = "детективы и триллеры"}, new {@class="font_color"})</li>
-                    <li>@Html.ActionLink("роман", "GenrePage", "Books", new { genre = "роман"}, new {@class="font_color"})</li>
-                    <li>@Html.ActionLink("приключения", "GenrePage", "Books", new { genre = "приключения"}, new {@class="font_color"})</li>
-                    <li>@Html.ActionLink("детское", "GenrePage", "Books", new { genre = "детское"}, new {@class="font_color"})</li>
-                    <li>@Html.ActionLink("поэзия", "GenrePage", "Books", new {genre = "поэзия"}, new {@class="font_color"})</li>
-                    <li>@Html.ActionLink("драматургия", "GenrePage", "Books", new { genre = "драматургия"}, new {@class="font_color"})</li>
-                    <li>@Html.ActionLink("биография", "GenrePage", "Books", new { genre = "биография"}, new {@class="font_color"})</li>
-                    <li>@Html.ActionLink("научпоп", "GenrePage", "Books", new { genre = "научпоп"}, new {@class="font_color"})</li>
-                    <li>@Html.ActionLink("история", "GenrePage", "Books", new { genre = "история"}, new {@class="font_color"})</li>
-                    <li>@Html.ActionLink("психология", "GenrePage", "Books", new { genre = "психология"}, new {@class="font_color"})</li>
-                    <li>@Html.ActionLink("ужасы", "GenrePage", "Books", new { genre = "ужасы"}, new {@class="font_color"})</li>
-                    <li>@Html.ActionLink("комиксы", "GenrePage", "Books", new { genre = "комиксы"}, new {@class="font_color"})</li>
-                    <li>@Html.ActionLink("искусство", "GenrePage", "Books", new { genre = "искусство"}, new {@class="font_color"})</li>
-                    <li>@Html.ActionLink("философия", "GenrePage", "Books", new { genre = "философия"}, new {@class="font_color"})</li>
-                    <li>@Html.ActionLink("юмор", "GenrePage", "Books", new { genre = "юмор"}, new {@class="font_color"})</li>
-                </ul>
+                <li>@Html.ActionLink("фантастика", "GenrePage", "Books", new {genre = "фантастика"}, new {@class = "font_color"})</li>
+                <li>@Html.ActionLink("фэнтези", "GenrePage", "Books", new {genre = "фэнтези"}, new {@class = "font_color"})</li>
+                <li>@Html.ActionLink("детективы и триллеры", "GenrePage", "Books", new {genre = "детективы и триллеры"}, new {@class = "font_color"})</li>
+                <li>@Html.ActionLink("роман", "GenrePage", "Books", new {genre = "роман"}, new {@class = "font_color"})</li>
+                <li>@Html.ActionLink("приключения", "GenrePage", "Books", new {genre = "приключения"}, new {@class = "font_color"})</li>
+                <li>@Html.ActionLink("детское", "GenrePage", "Books", new {genre = "детское"}, new {@class = "font_color"})</li>
+                <li>@Html.ActionLink("поэзия", "GenrePage", "Books", new {genre = "поэзия"}, new {@class = "font_color"})</li>
+                <li>@Html.ActionLink("драматургия", "GenrePage", "Books", new {genre = "драматургия"}, new {@class = "font_color"})</li>
+                <li>@Html.ActionLink("биография", "GenrePage", "Books", new {genre = "биография"}, new {@class = "font_color"})</li>
+                <li>@Html.ActionLink("научпоп", "GenrePage", "Books", new {genre = "научпоп"}, new {@class = "font_color"})</li>
+                <li>@Html.ActionLink("история", "GenrePage", "Books", new {genre = "история"}, new {@class = "font_color"})</li>
+                <li>@Html.ActionLink("психология", "GenrePage", "Books", new {genre = "психология"}, new {@class = "font_color"})</li>
+                <li>@Html.ActionLink("ужасы", "GenrePage", "Books", new {genre = "ужасы"}, new {@class = "font_color"})</li>
+                <li>@Html.ActionLink("комиксы", "GenrePage", "Books", new {genre = "комиксы"}, new {@class = "font_color"})</li>
+                <li>@Html.ActionLink("искусство", "GenrePage", "Books", new {genre = "искусство"}, new {@class = "font_color"})</li>
+                <li>@Html.ActionLink("философия", "GenrePage", "Books", new {genre = "философия"}, new {@class = "font_color"})</li>
+                <li>@Html.ActionLink("юмор", "GenrePage", "Books", new {genre = "юмор"}, new {@class = "font_color"})</li>
+            </ul>
         </div>
     </div>
 </aside>
