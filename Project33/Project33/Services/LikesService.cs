@@ -18,7 +18,13 @@ namespace Project33.Services
         {
             return _likesContext.Likes.Select(BuildLike).ToList();
         }
-       
+        
+        public Likes FindByUser(int user)
+        {
+            return _likesContext.Likes.Select(BuildLike).FirstOrDefault(book => book.user_id == user);
+        }
+        
+        
         private Likes BuildLike(Likes b)
         {
             return new Likes()
