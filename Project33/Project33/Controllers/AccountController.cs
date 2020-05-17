@@ -1,4 +1,4 @@
-﻿﻿using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
@@ -66,6 +66,11 @@ using Project33.Services.Models;
             public IActionResult Login()
             {
                 return View();
+            }
+            [HttpGet]
+            public IActionResult ProfilePageFromLayout()
+            {
+                return RedirectToAction("ProfilePage", "Account");
             }
             
             [HttpPost]
@@ -147,7 +152,35 @@ using Project33.Services.Models;
             // установка аутентификационных куки
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
         }
- 
-        
+
+
+        public async Task<IActionResult> ProfilePage()
+        {
+            UserContext user_db = new UserContext();
+            var userName = User.Identity.GetUserName();
+            User user = await user_db.Users.FirstOrDefaultAsync(x => x.Login == userName); // UserId found
+            
+            LikesContext db_likes = new LikesContext();
+            FavoritesContext db_favors = new FavoritesContext();
+            
+            //LikesService likesService =new LikesService();
+            
+            var likes = from l in db_likes.Likes select l;
+            likes = likes.Where(l => l.user_id.Contains(user.Id));
+            var likes_list = likes.ToList();
+
+            var favors = from f in db_favors.Favorites select f;
+            favors = favors.Where(f => f.user_id.Contains(user.Id));
+            var favors_list = favors.ToList();
+            
+            UserActionsInfo userActionsInfo = new UserActionsInfo()
+            {
+                username = user.Login,
+                likes = likes_list,
+                favors = favors_list
+            };
+            
+            return View(userActionsInfo);
+        }
     }
 }
