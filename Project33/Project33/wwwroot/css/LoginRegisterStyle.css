@@ -1,6 +1,4 @@
-﻿body{
-    background: #f5ebdc;;
-}
+﻿
 label{
     font-family: Alice;
     color: #550008;
@@ -26,16 +24,33 @@ a.font_color:visited {
     font-family: Alice;
 }
 .center_div{
-    background: #2c1609 url("../Assets/UPProjectLoginRegister.jpg");
-    border-radius: 20px;
+    background: #f1d8b9;
+    border-radius: 30px;
     position:absolute;
-    width: 304px;
-    height: 244px;
+    width: 444px;
+    height: 344px;
     top: 50%;
     left: 50%;
-    margin: -122px 0 0 -152px;
+    margin: -172px 0 0 -222px;
+    padding: 50px 70px 50px 70px;
 }
 input {
     right: 0;
     border-radius: 10px;
+}
+.register_style{
+    background: #f5ebdc;
+    border-radius: 15px;
+    padding: 5px;
+    text-align: center;
+}
+img.background {
+    z-index: -1;
+    min-height: 120%;
+    min-width: 640px;
+    width: 100%;
+    height: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
 }
