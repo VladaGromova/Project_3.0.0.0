@@ -1,0 +1,13 @@
+﻿@model IEnumerable<Project33.Services.Models.Favorites>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_UserPageLayout";
+}
+<h1>Избранное</h1>
+@foreach (var f in Model)
+{
+    <p>@f.book_name</p>
+}
+
+
