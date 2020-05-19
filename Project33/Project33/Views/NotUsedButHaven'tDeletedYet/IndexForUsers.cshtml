@@ -57,7 +57,7 @@
                     <div class="card card-01">
                         <img src="@b.cover" alt="Avatar" style="width:100%">
                         <div class="card-body">
-                            <h4><b>@Html.ActionLink(@b.name, "BookPageForUsers", "Books", new {id = b.id}, new {@class = "font_color"})</b></h4>
+                            <h4><b>@Html.ActionLink(@b.name, "BookPage", "Books", new {id = b.id}, new {@class = "font_color"})</b></h4>
                             <ul class="author_genre" type="square">
                                 <li class="author">@b.author</li>
                                 <li class="genre">@b.genre</li>

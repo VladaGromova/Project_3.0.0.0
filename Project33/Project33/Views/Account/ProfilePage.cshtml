@@ -1,8 +1,24 @@
-﻿@model Project33.Services.Models.UserActionsInfo
+﻿@using Microsoft.AspNet.Identity
+@using Project33.Data
+@model IEnumerable<Project33.Services.Models.User>
 
 @{
     ViewBag.Title = "title";
-    Layout = "_ProfilePageLayout";
+    Layout = "_MainPageLayout";
 }
 
-<h2>Приветствую, @Model.username!</h2>
+<h2>Приветствую, @User.Identity.GetUserName()!</h2>
+
+@{
+    LikesContext like_db = new LikesContext();
+}
+<ul class="list-group">
+    @foreach (var comment in Model)
+    {
+        <li class="list-group-item">
+            
+            
+        </li>
+    }
+</ul>
+

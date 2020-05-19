@@ -39,17 +39,17 @@ namespace Project33.Controllers
             return View(db.Books);
         }
 
-        public ActionResult IndexForUsers()
-        {
-            return View(db.Books);
-        }
+        // public ActionResult IndexForUsers()
+        // {
+        //     return View(db.Books);
+        // }
 
         public ActionResult BookPage(int? id)
         {
             var b = db.Books.Find(id);
             return View(b);
         }
-        public async Task<IActionResult> BookPageForUsers(int? id)
+        /*public async Task<IActionResult> BookPageForUsers(int? id)
         {
             UserContext user_db = new UserContext();
             var userName = User.Identity.GetUserName();
@@ -87,7 +87,7 @@ namespace Project33.Controllers
                 // поставлен лайк нет избранного
                 return RedirectToAction("LikedBookPageForUsers", "Books", new{b_id = id});
             }
-        }
+        }*/
 
         public IActionResult LikedBookPageForUsers(int b_id)
         {
@@ -131,17 +131,17 @@ namespace Project33.Controllers
 
             return View(await books.ToListAsync());
         }
-        [HttpPost]
-        public async Task<IActionResult> IndexForUsers(string searchString)
-        {
-            var books = from b in db.Books select b;
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                books = books.Where(b => b.name.Contains(searchString));
-            }
-
-            return View(await books.ToListAsync());
-        }
+        // [HttpPost]
+        // public async Task<IActionResult> IndexForUsers(string searchString)
+        // {
+        //     var books = from b in db.Books select b;
+        //     if (!String.IsNullOrEmpty(searchString))
+        //     {
+        //         books = books.Where(b => b.name.Contains(searchString));
+        //     }
+        //
+        //     return View(await books.ToListAsync());
+        // }
 
         [HttpPost]
         public async void ToFavor(int bookId)
