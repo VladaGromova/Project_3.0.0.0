@@ -17,26 +17,26 @@
 </head>
 <body>
 <main>
-    <article class="books_article">
-        <div>
-            <table>
-                <tr>
-                    <td>
-                        <p>Название книги</p></td>
-                    <td>
-                        <p>Автор</p></td>
-                </tr>
-                @foreach (var b in Model)
-                {
-                    <tr>
-                        <td>@Html.ActionLink(@b.name, "BookPage", "Books", new {id = b.id})</td>
-                        <td>
-                            <p>@b.author</p></td>
-                    </tr>
-                }
-            </table>
-        </div>
-    </article>
+    <section style="padding-top: 70px;">
+            <div class="container">
+                <div class="row">
+                    @foreach (var b in Model)
+                    {
+                        <div class="col-md-3">
+                            <div class="card card-01">
+                                <img src="@b.cover" alt="Avatar" style="width:100%">
+                                <div class="card-body">
+                                    <h4><b>@Html.ActionLink(@b.name, "BookPage", "Books", new {id = b.id}, new {@class = "font_color"})</b></h4>
+                                    <ul class="author_genre">
+                                        <li class="author">@b.author</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
 </main>
 
 <aside>

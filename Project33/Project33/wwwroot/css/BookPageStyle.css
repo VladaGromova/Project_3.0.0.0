@@ -1,0 +1,50 @@
+﻿body { background: #f5ebdc;}
+main {
+    padding-top: 50px;
+}
+a.font_color {
+    color: #550008;
+    font-family: Alice;
+}
+a.font_color:active {
+    color: #913039;
+    font-family: Alice;
+}
+a.font_color:link {
+    color: #550008;
+    font-family: Alice;
+}
+a.font_color:visited {
+    color: #240004;
+    font-family: Alice;
+}
+p{
+    font-family: Alice;
+    color: #550008;
+}
+h3{
+    font-family: Alice;
+    color: #550008;
+}
+h4 {
+    font-family: Alice;
+    color: #550008;
+}
+h4.likes {
+    padding-left: 20px;
+    padding-right: 10px;
+}
+img.cover {
+    width: 250px;
+}
+div.cover {
+    width: 270px;
+    padding-left: 20px;
+}
+div.book_inf {
+    padding-left: 20px;
+}
+div.comments {
+    padding-left: 20px;
+    padding-top: 20px;
+}

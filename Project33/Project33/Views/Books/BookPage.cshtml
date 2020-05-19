@@ -5,10 +5,25 @@
     Layout = "_MainPageLayout";
 }
 
-<h3>@Html.DisplayFor(model=>model.name)</h3>
-<td><p>@Html.DisplayFor(model=>model.description)</p></td>
-<td>Лайки:</td>
-<td><p>@Html.DisplayFor(model =>model.likes)</p></td>
+    <link rel="stylesheet" type="text/css" href="~/css/BookPageStyle.css">
 
-
-
+<body>
+<main>
+    <div class="container">
+        <div class="row">
+            <div class="cover">
+                <img class="cover" src="@Html.DisplayFor(model => model.cover)"/>
+            </div>
+            <div class="book_inf">
+                <h3>@Html.DisplayFor(model => model.name)</h3>
+                <h4>@Html.DisplayFor(model => model.author)</h4>
+                <td><p>@Html.DisplayFor(model => model.description)</p></td>
+                <div class="row">
+                    <h4 class="likes">Лайки:</h4>
+                    <h4>@Html.DisplayFor(model => model.likes)</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>

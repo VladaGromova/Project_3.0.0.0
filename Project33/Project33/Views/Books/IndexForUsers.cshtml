@@ -8,37 +8,69 @@
 <html>
 <meta charset="utf-8">
 <link rel="stylesheet" type="text/css" href="~/css/BooksIndexStyle.css">
-
+<style>
+    .card{
+      box-shadow:2px 2px 20px rgba(0,0,0,0.3); border:none; margin-bottom:30px;
+    }
+    .card:hover{
+      transform: scale(1.05);
+      transition: all 1s ease;
+      z-index: 999;
+    }
+    .card-01 .card-body{
+      position:relative; padding-top:40px;
+    }
+    .card-01 .badge-box{
+      position:absolute; 
+      top:-20px; left:50%; width:100px; height:100px;margin-left:-50px; text-align:center;
+    }
+    .card-01 .badge-box i{
+      background:#006EFF; color:#fff; border-radius:50%;  width:50px; height:50px; line-height:50px; text-align:center; font-size:20px;
+    }
+    .card-01 .height-fix{
+      height:455px; overflow:hidden;
+    }
+    .author_genre {
+        font-family: Alice;
+        padding-top: 20px;
+        line-height: 15px;
+    }
+    .author {
+        color: #550008;
+    }
+    .genre {
+        color: #913039;
+    }
+</style>
 <head>
     <meta name="viewport" content="width=device-width"/>
     <title>Книжный мир</title>@*@Url.Content("~/Content/Site.css")*@
 </head>
 <body>
-<div>
-    <h3>Книги:</h3>
-    <table>
-        <tr>
-            <td>
-                <p>Название книги</p></td>
-            <td>
-                <p>Автор</p></td>
-            <td>
-                <p>Жанр</p></td>
-        </tr>
-        @foreach (var b in Model)
-        {
-            <tr>
-                <td>@Html.ActionLink(@b.name, "BookPageForUsers", "Books", new {id = b.id})</td>
+<main>
+<section style="padding-top: 70px;">
+    <div class="container">
+        <div class="row">
+            @foreach (var b in Model)
+            {
+                <div class="col-md-3">
+                    <div class="card card-01">
+                        <img src="@b.cover" alt="Avatar" style="width:100%">
+                        <div class="card-body">
+                            <h4><b>@Html.ActionLink(@b.name, "BookPageForUsers", "Books", new {id = b.id}, new {@class = "font_color"})</b></h4>
+                            <ul class="author_genre" type="square">
+                                <li class="author">@b.author</li>
+                                <li class="genre">@b.genre</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+</main>
 
-                <td>
-                    <p>@b.author</p></td>
-                <td>
-                    <p>@b.genre</p></td>
-
-            </tr>
-        }
-    </table>
-</div>
 <aside>
     <div id="menu-menu-css" class="genres" style="padding-top: 70px">
         <h2 class="block_title" style="padding: 20px; ">
