@@ -1,4 +1,8 @@
-﻿@model Project33.Services.Models.Books
+﻿@using Microsoft.AspNet.Identity
+@using Microsoft.EntityFrameworkCore
+@using Project33.Data
+@using Project33.Services.Models
+@model Project33.Services.Models.Books
 
 @{
     ViewBag.Title = "title";
@@ -18,12 +22,178 @@
                 <h3>@Html.DisplayFor(model => model.name)</h3>
                 <h4>@Html.DisplayFor(model => model.author)</h4>
                 <td><p>@Html.DisplayFor(model => model.description)</p></td>
-                <div class="row">
-                    <h4 class="likes">Лайки:</h4>
-                    <h4>@Html.DisplayFor(model => model.likes)</h4>
-                </div>
+                <td>Лайки:</td>
+                <div id="likes">@Model.likes</div>
+                
+                @if (User.Identity.IsAuthenticated)
+                {
+                    UserContext user_db = new UserContext();
+                    LikesContext likes_db = new LikesContext();
+    
+                    var userName = User.Identity.GetUserName();
+                    User user = await user_db.Users.FirstOrDefaultAsync(x => x.Login == userName); 
+
+                    if (await likes_db.Likes.FirstOrDefaultAsync(i => (i.user_id == user.Id) && (i.book_id == Model.id)) == null)
+                    {
+                        <input type="button" class="btn" id="like" name="like" value="like" onclick="foo()"/>
+                    }
+                    else
+                    {
+                        <input type="button" class="btn" id="like" name="like" value="unlike" onclick="ffoo()"/>
+                    }
+                    
+                        <div id="favorites">Add book to your favorites!</div>
+                        <input type="button" class="btn" id="favor" name="favor" value="ToFavor" onclick="boo()"/>
+                    }
+                else
+                {
+                    <div class="row">
+                        <h4 class="likes">Лайки:</h4>
+                        <h4>@Html.DisplayFor(model => model.likes)</h4>
+                    </div>
+                }
             </div>
         </div>
     </div>
 </main>
 </body>
+
+<script>
+likeCount = @Model.likes
+function foo() {
+    if(document.getElementById("like").value=="like")
+    {
+        var a=Number(@Model.likes);
+  document.getElementById("like").value = "unlike";
+  var p = document.getElementById('likes');
+ p.innerHTML = ++a;
+           $.ajax({
+               url:'@Url.Action("ToLike", "Books")',
+               type:'POST',
+               data: {
+                    num_of_likes: a,
+                    bookId: @Model.id
+               }
+             })
+
+    } else 
+        {
+            var a=Number(@Model.likes);
+        document.getElementById("like").value = "like";
+        var p = document.getElementById('likes');
+       p.innerHTML = a;
+       
+           $.ajax({
+               url:'@Url.Action("ToUnLike", "Books")',
+               type:'POST',
+               data: {
+                    num_of_likes: a,
+                    bookId: @Model.id
+               }
+             })
+    }
+}
+
+function ffoo() {
+    if(document.getElementById("like").value=="like")
+    {
+        var a=Number(@Model.likes);
+  document.getElementById("like").value = "unlike";
+  var p = document.getElementById('likes');
+ p.innerHTML = a;
+           $.ajax({
+               url:'@Url.Action("ToLike", "Books")',
+               type:'POST',
+               data: {
+                    num_of_likes: a,
+                    bookId: @Model.id
+               }
+             })
+
+    } else 
+        {
+            var a=Number(@Model.likes);
+        document.getElementById("like").value = "like";
+        var p = document.getElementById('likes');
+       p.innerHTML = --a;
+        $.ajax({
+                      url:'@Url.Action("ToUnLike", "Books")',
+                      type:'POST',
+                      data: {
+                           num_of_likes: a,
+                           bookId: @Model.id
+                      }
+                    })
+    }
+}
+</script>
+
+<script>
+function boo() {
+    if(document.getElementById("favor").value=="ToFavor")
+    {
+  document.getElementById("favor").value = "DeleteFavor";
+  document.getElementById("favorites").innerHTML = 'BookAddedToFavors!';
+           $.ajax({
+               url:'@Url.Action("ToFavor", "Books")',
+               type:'POST',
+               data: {
+                    bookId: @Model.id
+               }
+             })
+    } else 
+        {
+        document.getElementById("favor").value = "ToFavor";
+  document.getElementById("favorites").innerHTML = 'BookDeletedFromFavors!';
+           $.ajax({
+               url:'@Url.Action("DeleteFavor", "Books")',
+               type:'POST',
+               data: {
+                    bookId: @Model.id
+               }
+             })
+    }
+}
+</script>
+
+<div class="comments">
+    <div>
+        <textarea id="textData" placeholder="Введите комментарий..." cols="90" rows="3"></textarea>
+    </div>
+    <div>
+        <button id="sendComment" class="btn btn-dark">Комментировать</button>
+    </div>
+</div>
+
+
+
+@section Scripts{
+    <script>
+    $('#sendComment').on('click', function() {
+          $.ajax({
+              url:'@Url.Action("NewComment", "Comment")',
+              type:'POST',
+              data: {
+                   text: $('#textData').val(),
+                   number: @Model.id
+              },   
+              success: function(responseText){ 
+                   $('body').append("<span>" + responseText + "</span>");
+                   document.getElementById("textData").value = "";
+              }  
+            })
+        })
+          
+    $.ajax({
+        url:'@Url.Action("Comments", "Comment")',
+        type: "GET",
+        data: {
+            number: @Model.id
+        },
+        success: function(responseText){
+         /* responseText - данные, полученные от сервера */
+            $('body').append("<span>" + responseText + "</span>");
+        }
+    })
+</script>
+}

@@ -33,21 +33,44 @@
             </a>
         </ul>
         <div class="d-flex justify-content-center">
-        <form asp-controller="Books" asp-action="Index" class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" name="SearchString" placeholder="Поиск по названию" aria-label="Search" style="border-radius: 20px 0 0 20px">
-            <button class="btn btn-outline-danger my-2 my-sm-0" type="submit" style="border-radius: 0 20px 20px 0">
-                <i class="fa fa-search"></i>
-            </button>
-        </form>    
+            <form asp-controller="Books" asp-action="Index" class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="text" name="SearchString" placeholder="Поиск по названию" aria-label="Search" style="border-radius: 20px 0 0 20px">
+                <button class="btn btn-outline-danger my-2 my-sm-0" type="submit" style="border-radius: 0 20px 20px 0">
+                    <i class="fa fa-search"></i>
+                </button>
+            </form>    
         </div>
-        <ul class="navbar-text my-lg-0 mr-lg-0" style="list-style-type: none; line-height: 5px; padding-right: 80px">
-            <li class="nav-item">
-                <a class="nav-link text-dark login_register_font" asp-area="" asp-controller="Account" asp-action="Login">Вход</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-dark login_register_font" asp-area="" asp-controller="Account" asp-action="Register">Регистрация</a>
-            </li>
-        </ul>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <ul style="padding-top: 15px; list-style-type: none; line-height: 1px; padding-right: 60px">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Edit" style="font-family: Alice; font-size: 15pt; color: #550008">Хочу заредактироваться!</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="ProfilePageFromLayout" style="font-family: Alice; font-size: 15pt; color: #550008">Мой профиль</a>
+                    </li>
+                </ul>
+            <ul class="navbar-text my-lg-0 mr-lg-0" style="list-style-type: none; line-height: 5px">
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Logout" style="font-family: Alice; font-size: 20pt; color: #550008">Выход</a>
+                </li>
+                <li>
+                    <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Logout" style="font-family: Alice; font-size: 5pt; color: #550008">(к сожалению не в окно)</a>
+                </li>
+            </ul>
+        }
+        else
+        {
+            <ul class="navbar-text my-lg-0 mr-lg-0" style="list-style-type: none; line-height: 5px; padding-right: 80px">
+                 <li class="nav-item">
+                      <a class="nav-link text-dark login_register_font" asp-area="" asp-controller="Account" asp-action="Login">Вход</a>
+                 </li>
+                 <li class="nav-item">
+                       <a class="nav-link text-dark login_register_font" asp-area="" asp-controller="Account" asp-action="Register">Регистрация</a>
+                 </li>
+            </ul>
+        }
+        
     </nav>
 </header>
 <div class="container" style="margin: 0">

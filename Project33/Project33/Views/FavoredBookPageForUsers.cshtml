@@ -4,27 +4,27 @@
 
 @{
     ViewBag.Title = "title";
-    Layout = "_UserPageLayout";
+    Layout = "_MainPageLayout";
 }
 
 <h3>@Html.DisplayFor(model=>model.name)</h3>
 <td><p>@Html.DisplayFor(model=>model.description)</p></td>
 <td>Лайки:</td>
 <div id="likes">@Model.likes</div>
-<input type="button" class="btn" id="like" name="like" value="unlike" onclick="ffoo()"/>
+<input type="button" class="btn" id="like" name="like" value="like" onclick="foo()"/>
 
-<div id="favorites">Delete book from your favorites!</div>
+<div id="favorites">DeleteBookFromYourFavors</div>
 <input type="button" class="btn" id="favor" name="favor" value="DeleteFavor" onclick="boo()"/>
 
 <script>
 likeCount = @Model.likes
-function ffoo() {
+function foo() {
     if(document.getElementById("like").value=="like")
     {
         var a=Number(@Model.likes);
   document.getElementById("like").value = "unlike";
   var p = document.getElementById('likes');
- p.innerHTML = a;
+ p.innerHTML = ++a;
            $.ajax({
                url:'@Url.Action("ToLike", "Books")',
                type:'POST',
@@ -39,15 +39,16 @@ function ffoo() {
             var a=Number(@Model.likes);
         document.getElementById("like").value = "like";
         var p = document.getElementById('likes');
-       p.innerHTML = --a;
-        $.ajax({
-                      url:'@Url.Action("ToUnLike", "Books")',
-                      type:'POST',
-                      data: {
-                           num_of_likes: a,
-                           bookId: @Model.id
-                      }
-                    })
+       p.innerHTML = a;
+       
+           $.ajax({
+               url:'@Url.Action("ToUnLike", "Books")',
+               type:'POST',
+               data: {
+                    num_of_likes: a,
+                    bookId: @Model.id
+               }
+             })
     }
 }
 </script>
@@ -79,6 +80,7 @@ function boo() {
     }
 }
 </script>
+
 
 <div>
     <textarea id="textData" placeholder="Введите комментарий..." cols="90" rows="3"></textarea>
