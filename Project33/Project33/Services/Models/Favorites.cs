@@ -8,5 +8,6 @@ namespace Project33.Services.Models
         public int id { get; set; }
         public int book_id { get; set; }
         public  int user_id { get; set; }
+        public string book_name { get; set; }
     }
 }

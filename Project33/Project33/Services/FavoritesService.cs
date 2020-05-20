@@ -25,7 +25,8 @@ namespace Project33.Services
             {
                 id = f.id,
                 book_id = f.book_id,
-                user_id = f.user_id
+                user_id = f.user_id,
+                book_name = f.book_name
             };
         }
     }

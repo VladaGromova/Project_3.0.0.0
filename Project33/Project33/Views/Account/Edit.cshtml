@@ -4,27 +4,90 @@
     ViewBag.Title = "Редактирование пользователя";
 }
 
-<form asp-action="Edit" asp-controller="Account">
-    <div asp-validation-summary="All" class="text-danger"></div>
-    <div style="padding-top: 20px">
-        <div class="form-group">
-            <label asp-for="Login" class="control-label">Логин</label>
-            <input type="text" asp-for="Login" class="form-control" />
+<style>
+    label{
+        font-family: Alice;
+        color: #550008;
+    }
+    h2{
+        font-family: Alice;
+        color: #550008;
+    }
+    a.font_color {
+        color: #550008;
+        font-family: Alice;
+    }
+    a.font_color:active {
+        color: #913039;
+        font-family: Alice;
+    }
+    a.font_color:link {
+        color: #550008;
+        font-family: Alice;
+    }
+    a.font_color:visited {
+        color: #240004;
+        font-family: Alice;
+    }
+    .center_div{
+        background: #f1d8b9;
+        border-radius: 30px;
+        position:absolute;
+        width: 444px;
+        height: 506px;
+        top: 50%;
+        left: 50%;
+        margin: -253px 0 0 -212px;
+        padding: 50px 70px 50px 70px;
+    }
+    input {
+        right: 0;
+        border-radius: 10px;
+    } 
+    .register_style{
+        background: #f5ebdc;
+        border-radius: 15px;
+        padding: 5px;
+        text-align: center;
+    }
+    img.background {
+        z-index: -1;
+        min-height: 120%;
+          min-width: 640px;
+          width: 100%;
+          height: auto;
+          position: fixed;
+          top: 0;
+          left: 0;
+        }
+</style>
+<body>
+<img class="background" src="~/Assets/UPProjectLoginRegister.jpg" alt="фон"/>
+<div class="center_div">
+    <h2>Внести изменения в профиль</h2>
+    <form asp-action="Edit" asp-controller="Account">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div style="padding-top: 20px">
+            <div class="form-group">
+                <label asp-for="Login" class="control-label">Логин</label>
+                <input type="text" asp-for="Login" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <label asp-for="Age" class="control-label">Возраст</label>
+                <input type="text" asp-for="Age" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <label asp-for="OldPassword" class="control-label">Старый пароль</label>
+                <input type="text" asp-for="OldPassword" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <label asp-for="NewPassword" class="control-label">Новый пароль</label>
+                <input type="text" asp-for="NewPassword" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Заредактироваться!" class="btn btn-outline-secondary"/>
+            </div>
         </div>
-        <div class="form-group">
-            <label asp-for="Age" class="control-label">Возраст</label>
-            <input type="text" asp-for="Age" class="form-control" />
-        </div>
-        <div class="form-group">
-            <label asp-for="OldPassword" class="control-label">Старый пароль</label>
-            <input type="text" asp-for="OldPassword" class="form-control" />
-        </div>
-        <div class="form-group">
-            <label asp-for="NewPassword" class="control-label">Новый пароль</label>
-            <input type="text" asp-for="NewPassword" class="form-control" />
-        </div>
-        <div class="form-group">
-            <input type="submit" value="Заредактироваться!" class="btn btn-outline-secondary" />
-        </div>
-    </div>
-</form>
+    </form>
+</div>
+</body>
