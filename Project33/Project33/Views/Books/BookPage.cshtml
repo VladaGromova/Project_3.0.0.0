@@ -1,4 +1,8 @@
-﻿@model Project33.Services.Models.Books
+﻿@using Microsoft.AspNet.Identity
+@using Microsoft.EntityFrameworkCore
+@using Project33.Data
+@using Project33.Services.Models
+@model Project33.Services.Models.Books
 
 @{
     ViewBag.Title = "title";
@@ -18,16 +22,29 @@
                 <h3>@Html.DisplayFor(model => model.name)</h3>
                 <h4>@Html.DisplayFor(model => model.author)</h4>
                 <td><p>@Html.DisplayFor(model => model.description)</p></td>
+                <td>Лайки:</td>
+                <div id="likes">@Model.likes</div>
+                
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <div class="row">
-                        <h4 class="likes">Лайки:</h4>
-                        <div id="likes">@Model.likes</div>
+                    UserContext user_db = new UserContext();
+                    LikesContext likes_db = new LikesContext();
+    
+                    var userName = User.Identity.GetUserName();
+                    User user = await user_db.Users.FirstOrDefaultAsync(x => x.Login == userName); 
+
+                    if (await likes_db.Likes.FirstOrDefaultAsync(i => (i.user_id == user.Id) && (i.book_id == Model.id)) == null)
+                    {
                         <input type="button" class="btn" id="like" name="like" value="like" onclick="foo()"/>
-                    </div>
-                    <div id="favorites">Add book to your favorites!</div>
-                    <input type="button" class="btn" id="favor" name="favor" value="ToFavor" onclick="boo()"/>
-                }
+                    }
+                    else
+                    {
+                        <input type="button" class="btn" id="like" name="like" value="unlike" onclick="ffoo()"/>
+                    }
+                    
+                        <div id="favorites">Add book to your favorites!</div>
+                        <input type="button" class="btn" id="favor" name="favor" value="ToFavor" onclick="boo()"/>
+                    }
                 else
                 {
                     <div class="row">
@@ -74,6 +91,39 @@ function foo() {
                     bookId: @Model.id
                }
              })
+    }
+}
+
+function ffoo() {
+    if(document.getElementById("like").value=="like")
+    {
+        var a=Number(@Model.likes);
+  document.getElementById("like").value = "unlike";
+  var p = document.getElementById('likes');
+ p.innerHTML = a;
+           $.ajax({
+               url:'@Url.Action("ToLike", "Books")',
+               type:'POST',
+               data: {
+                    num_of_likes: a,
+                    bookId: @Model.id
+               }
+             })
+
+    } else 
+        {
+            var a=Number(@Model.likes);
+        document.getElementById("like").value = "like";
+        var p = document.getElementById('likes');
+       p.innerHTML = --a;
+        $.ajax({
+                      url:'@Url.Action("ToUnLike", "Books")',
+                      type:'POST',
+                      data: {
+                           num_of_likes: a,
+                           bookId: @Model.id
+                      }
+                    })
     }
 }
 </script>

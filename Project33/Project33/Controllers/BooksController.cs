@@ -89,14 +89,14 @@ namespace Project33.Controllers
             }
         }*/
 
-        public IActionResult LikedBookPageForUsers(int b_id)
-        {
-            
-            var b = db.Books.Find(b_id);
-            return View(b);
-        }
+        // public IActionResult LikedBookPageForUsers(int b_id)
+        // {
+        //     
+        //     var b = db.Books.Find(b_id);
+        //     return View(b);
+        // }
         
-        public IActionResult LikedFavoredBookPageForUsers(int b_id)
+        /*public IActionResult LikedFavoredBookPageForUsers(int b_id)
         {
             
             var b = db.Books.Find(b_id);
@@ -108,7 +108,7 @@ namespace Project33.Controllers
             
             var b = db.Books.Find(b_id);
             return View(b);
-        }
+        }*/
         
         
 
