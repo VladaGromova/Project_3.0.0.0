@@ -159,7 +159,8 @@ namespace Project33.Controllers
             {
                 id = (++real_num_of_favs),
                 book_id = bookId,
-                user_id = user.Id
+                user_id = user.Id,
+                book_name = b.name
             };
             _db.Favorites.Add(fav);
             await _db.SaveChangesAsync();    
@@ -267,14 +268,9 @@ namespace Project33.Controllers
                 //Books b = db.Books.FirstOrDefault(b => b.id == bookId);
                 b.likes = (number-2);
             }
-            
-
-            //Books b = db.Books.FirstOrDefault(b => b.id == bookId);
-            //b.likes = number;
-            //db.SaveChanges();
             await db.SaveChangesAsync();
             await likes_db.SaveChangesAsync(); 
-            //return b.likes;
         }
+        
     }
 }
