@@ -29,7 +29,8 @@
                 {
                     UserContext user_db = new UserContext();
                     LikesContext likes_db = new LikesContext();
-    
+                    FavoritesContext favorite_db = new FavoritesContext();
+                    
                     var userName = User.Identity.GetUserName();
                     User user = await user_db.Users.FirstOrDefaultAsync(x => x.Login == userName); 
 
@@ -41,10 +42,18 @@
                     {
                         <input type="button" class="btn" id="like" name="like" value="unlike" onclick="ffoo()"/>
                     }
-                    
+                    if (await favorite_db.Favorites.FirstOrDefaultAsync(i => (i.user_id == user.Id) && (i.book_id == Model.id)) == null)
+                    {
                         <div id="favorites">Add book to your favorites!</div>
                         <input type="button" class="btn" id="favor" name="favor" value="ToFavor" onclick="boo()"/>
                     }
+                    else
+                    {
+                        <div id="favorites">DeleteBookFromYourFavors</div>
+                        <input type="button" class="btn" id="favor" name="favor" value="DeleteFavor" onclick="boo()"/>
+                        
+                    }
+                }
                 else
                 {
                     <div class="row">
