@@ -7,7 +7,5 @@
 <h1>Избранное</h1>
 @foreach (var f in Model)
 {
-    <p>@f.book_name</p>
+    <p><b>@Html.ActionLink(@f.book_name, "BookPage", "Books", new {id = f.book_id}, new {@class = "font_color"})</b></p>
 }
-
-

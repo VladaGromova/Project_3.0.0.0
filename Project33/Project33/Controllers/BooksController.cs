@@ -39,78 +39,11 @@ namespace Project33.Controllers
             return View(db.Books);
         }
 
-        // public ActionResult IndexForUsers()
-        // {
-        //     return View(db.Books);
-        // }
-
         public ActionResult BookPage(int? id)
         {
             var b = db.Books.Find(id);
             return View(b);
         }
-        /*public async Task<IActionResult> BookPageForUsers(int? id)
-        {
-            UserContext user_db = new UserContext();
-            var userName = User.Identity.GetUserName();
-            User user = await user_db.Users.FirstOrDefaultAsync(x => x.Login == userName); // UserId found
-
-            FavoritesContext favor_db = new FavoritesContext();
-            
-            LikesContext likes_db = new LikesContext();
-            var num_of_likes = likes_db.Likes.ToArray().Length;
-
-            Books b = db.Books.FirstOrDefault(b => b.id == id);
-            if (likes_db.Likes.FirstOrDefault(i => (i.user_id == user.Id) && (i.book_id == id)) == null)
-            {
-                //не поставлен лайк
-                if (favor_db.Favorites.FirstOrDefault(f => (f.user_id==user.Id))==null){
-                    // нет лайка нет избранного
-                return View(b);
-                }
-                else
-                {
-                    // нет лайка есть избранное
-                    return RedirectToAction("FavoredBookPageForUsers", "Books", new{b_id = id});
-                }
-            }
-            else
-            {
-                // поставлен лайк
-                if (favor_db.Favorites.FirstOrDefault(f => (f.user_id==user.Id))!=null)
-                {
-                    //поставлен лайк есть избранное
-                    return RedirectToAction("LikedFavoredBookPageForUsers", "Books", new{b_id = id});
-                    
-                }
-
-                // поставлен лайк нет избранного
-                return RedirectToAction("LikedBookPageForUsers", "Books", new{b_id = id});
-            }
-        }*/
-
-        // public IActionResult LikedBookPageForUsers(int b_id)
-        // {
-        //     
-        //     var b = db.Books.Find(b_id);
-        //     return View(b);
-        // }
-        
-        /*public IActionResult LikedFavoredBookPageForUsers(int b_id)
-        {
-            
-            var b = db.Books.Find(b_id);
-            return View(b);
-        }
-        
-        public IActionResult FavoredBookPageForUsers(int b_id)
-        {
-            
-            var b = db.Books.Find(b_id);
-            return View(b);
-        }*/
-        
-        
 
         public ActionResult GenrePage(string? genre)
         {
@@ -131,18 +64,7 @@ namespace Project33.Controllers
 
             return View(await books.ToListAsync());
         }
-        // [HttpPost]
-        // public async Task<IActionResult> IndexForUsers(string searchString)
-        // {
-        //     var books = from b in db.Books select b;
-        //     if (!String.IsNullOrEmpty(searchString))
-        //     {
-        //         books = books.Where(b => b.name.Contains(searchString));
-        //     }
-        //
-        //     return View(await books.ToListAsync());
-        // }
-
+        
         [HttpPost]
         public async void ToFavor(int bookId)
         {

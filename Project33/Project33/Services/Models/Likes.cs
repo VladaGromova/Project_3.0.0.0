@@ -1,7 +1,4 @@
-﻿ using System;
- using System.ComponentModel.DataAnnotations;
- using Project33.Data;
- namespace Project33.Services.Models
+﻿namespace Project33.Services.Models
 {
     public class Likes
     {
