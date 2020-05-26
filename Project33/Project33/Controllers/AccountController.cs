@@ -122,80 +122,30 @@ using Project33.Services.Models;
         }
 
         [HttpGet]
-            public IActionResult Login()
-            {
-                return View();
-            }
-            [HttpGet]
-            public IActionResult ProfilePageFromLayout()
-            {
-                //return RedirectToAction("ProfilePage", "Account");
-                return RedirectToAction("Login", "Account");
-                
-            }
-            
-            [HttpPost]
-            [ValidateAntiForgeryToken]
-            public async Task<IActionResult> Login(LoginViewModel model)
-            {
-                if (ModelState.IsValid)
-                {
-                    User user = await db.Users.FirstOrDefaultAsync(u => u.Login == model.Login && u.Password == model.Password);
-                    if (user != null)
-                    {
-                        await Authenticate(model.Login); // аутентификация
-     
-                        return RedirectToAction("Index", "Books");
-                    }
-                    ModelState.AddModelError("", "Некорректные логин и(или) пароль");
-                }
-                return View(model);
-            }
-    
-        /*[HttpGet]
-        public IActionResult Login(string returnUrl = null)
+        public IActionResult Login()
         {
-            return View(new LoginViewModel { ReturnUrl = returnUrl });
+            return View();
         }
- 
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken] 
         public async Task<IActionResult> Login(LoginViewModel model)
-        {
+        { 
             if (ModelState.IsValid)
             {
-                var result = 
-                    await _signInManager.PasswordSignInAsync(model.Login, model.Password, model.RememberMe, false);
-                if (result.Succeeded)
-                {
-                    // проверяем, принадлежит ли URL приложению
-                    if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
-                    {
-                        return Redirect(model.ReturnUrl);
-                    }
-                    else
-                    {
-                        return RedirectToAction("Index", "Home");
-                    }
+                User user = await db.Users.FirstOrDefaultAsync(u => u.Login == model.Login && u.Password == model.Password);
+                if (user != null)
+                { 
+                    await Authenticate(model.Login); // аутентификация
+                    
+                    return RedirectToAction("Index", "Books");
                 }
-                else
-                {
-                    ModelState.AddModelError("", "Неправильный логин и (или) пароль");
-                }
+                ModelState.AddModelError("", "Некорректные логин и(или) пароль");
             }
             return View(model);
         }
- 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Logout()
-        {
-            // удаляем аутентификационные куки
-            await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Books");
-        }*/
-        
-        public async Task<IActionResult> Logout()
+
+            public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index", "Books");
@@ -213,36 +163,5 @@ using Project33.Services.Models;
             // установка аутентификационных куки
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
         }
-
-
-        public async Task<IActionResult> ProfilePage()
-        {
-            // UserContext user_db = new UserContext();
-            // var userName = User.Identity.GetUserName();
-            // User user = await user_db.Users.FirstOrDefaultAsync(x => x.Login == userName); // UserId found
-            //
-            // LikesContext db_likes = new LikesContext();
-            // FavoritesContext db_favors = new FavoritesContext();
-            //
-            // //LikesService likesService =new LikesService();
-            //
-            // var likes = from l in db_likes.Likes select l;
-            // likes = likes.Where(l => l.user_id.Contains(user.Id));
-            // var likes_list = likes.ToList();
-            //
-            // var favors = from f in db_favors.Favorites select f;
-            // favors = favors.Where(f => f.user_id.Contains(user.Id));
-            // var favors_list = favors.ToList();
-            //
-            // UserActionsInfo userActionsInfo = new UserActionsInfo()
-            // {
-            //     username = user.Login,
-            //     likes = likes_list,
-            //     favors = favors_list
-            // };
-
-            return View(); //View(userActionsInfo);
-        }
-        
     }
 }
