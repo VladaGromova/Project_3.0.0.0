@@ -22,8 +22,10 @@
                 <h3>@Html.DisplayFor(model => model.name)</h3>
                 <h4>@Html.DisplayFor(model => model.author)</h4>
                 <td><p>@Html.DisplayFor(model => model.description)</p></td>
-                <td>Лайки:</td>
-                <div id="likes">@Model.likes</div>
+                <div class="row" style="padding-left: 20px">
+                    <div>Лайки:</div>
+                    <div id="likes">@Model.likes</div>
+                </div>
                 
                 @if (User.Identity.IsAuthenticated)
                 {
@@ -36,21 +38,21 @@
 
                     if (await likes_db.Likes.FirstOrDefaultAsync(i => (i.user_id == user.Id) && (i.book_id == Model.id)) == null)
                     {
-                        <input type="button" class="btn" id="like" name="like" value="like" onclick="foo()"/>
+                        <input type="button" class="btn likefavor" id="like" name="like" value="Нравится" onclick="foo()"/>
                     }
                     else
                     {
-                        <input type="button" class="btn" id="like" name="like" value="unlike" onclick="ffoo()"/>
+                        <input type="button" class="btn likefavor" id="like" name="like" value="Уже не нравится" onclick="ffoo()"/>
                     }
                     if (await favorite_db.Favorites.FirstOrDefaultAsync(i => (i.user_id == user.Id) && (i.book_id == Model.id)) == null)
                     {
-                        <div id="favorites">Add book to your favorites!</div>
-                        <input type="button" class="btn" id="favor" name="favor" value="ToFavor" onclick="boo()"/>
+                        <div id="favorites">Добавить книгу в избранные!</div>
+                        <input type="button" class="btn likefavor" id="favor" name="favor" value="Добавить в избранные" onclick="boo()"/>
                     }
                     else
                     {
-                        <div id="favorites">DeleteBookFromYourFavors</div>
-                        <input type="button" class="btn" id="favor" name="favor" value="DeleteFavor" onclick="boo()"/>
+                        <div id="favorites">Удалить книгу из избранных</div>
+                        <input type="button" class="btn likefavor" id="favor" name="favor" value="Удалить из избранных" onclick="boo()"/>
                         
                     }
                 }
@@ -70,10 +72,10 @@
 <script>
 likeCount = @Model.likes
 function foo() {
-    if(document.getElementById("like").value=="like")
+    if(document.getElementById("like").value=="Нравится")
     {
         var a=Number(@Model.likes);
-  document.getElementById("like").value = "unlike";
+  document.getElementById("like").value = "Уже не нравится";
   var p = document.getElementById('likes');
  p.innerHTML = ++a;
            $.ajax({
@@ -88,7 +90,7 @@ function foo() {
     } else 
         {
             var a=Number(@Model.likes);
-        document.getElementById("like").value = "like";
+        document.getElementById("like").value = "Нравится";
         var p = document.getElementById('likes');
        p.innerHTML = a;
        
@@ -104,10 +106,10 @@ function foo() {
 }
 
 function ffoo() {
-    if(document.getElementById("like").value=="like")
+    if(document.getElementById("like").value=="Нравится")
     {
         var a=Number(@Model.likes);
-  document.getElementById("like").value = "unlike";
+  document.getElementById("like").value = "Уже не нравится";
   var p = document.getElementById('likes');
  p.innerHTML = a;
            $.ajax({
@@ -122,7 +124,7 @@ function ffoo() {
     } else 
         {
             var a=Number(@Model.likes);
-        document.getElementById("like").value = "like";
+        document.getElementById("like").value = "Нравится";
         var p = document.getElementById('likes');
        p.innerHTML = --a;
         $.ajax({
@@ -139,10 +141,10 @@ function ffoo() {
 
 <script>
 function boo() {
-    if(document.getElementById("favor").value=="ToFavor")
+    if(document.getElementById("favor").value=="Добавить в избранные")
     {
-  document.getElementById("favor").value = "DeleteFavor";
-  document.getElementById("favorites").innerHTML = 'BookAddedToFavors!';
+  document.getElementById("favor").value = "Удалить из избранных";
+  document.getElementById("favorites").innerHTML = 'Книга добавлена в избранные!';
            $.ajax({
                url:'@Url.Action("ToFavor", "Books")',
                type:'POST',
@@ -152,8 +154,8 @@ function boo() {
              })
     } else 
         {
-        document.getElementById("favor").value = "ToFavor";
-  document.getElementById("favorites").innerHTML = 'BookDeletedFromFavors!';
+        document.getElementById("favor").value = "Добавить в избранные";
+  document.getElementById("favorites").innerHTML = 'Книга удалена из избранных!';
            $.ajax({
                url:'@Url.Action("DeleteFavor", "Books")',
                type:'POST',

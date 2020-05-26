@@ -1,4 +1,8 @@
-﻿.btn-primary {
+﻿.btn-primary
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:visited,
+.btn-primary:active{
     background-color: #a87c60;
     color: #432507;
     font-family: Alice;
@@ -9,14 +13,7 @@
     border: 0 !important;
     border-radius: 20px 20px 20px 20px;
 }
-.btn-primary:hover,
-.btn-primary:focus,
-.btn-primary:visited,
-.btn-primary:active{
-    background-color: #886149;
-    color: #2c1609;
-    border: 0 !important;
-}
+
 body {
     background: #391b0c url("../Assets/UPProjectGreetingPage.jpg");
     background-size: cover;

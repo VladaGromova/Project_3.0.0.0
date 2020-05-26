@@ -4,10 +4,14 @@
     ViewBag.Title = "title";
     Layout = "_MainPageLayout";
 }
-<h1>Избранное</h1>
-@foreach (var f in Model)
-{
-    <p>@f.book_name</p>
-}
+
+    <link rel="stylesheet" type="text/css" href="~/css/BookPageStyle.css">
 
 
+<h1 class="favor">Ваше избранное:</h1>
+<ol class="bullet">
+   @foreach (var f in Model)
+   {
+       <li><b>@Html.ActionLink(@f.book_name, "BookPage", "Books", new {id = f.book_id}, new {@class = "font_color"})</b></li>
+   } 
+</ol>
