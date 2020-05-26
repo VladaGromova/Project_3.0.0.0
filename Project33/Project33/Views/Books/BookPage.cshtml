@@ -33,8 +33,13 @@
                     LikesContext likes_db = new LikesContext();
                     FavoritesContext favorite_db = new FavoritesContext();
                     
+                    <div class="row">
+                        <h4 class="likes">Лайки:</h4>
+                        <div id="likes">@Model.likes</div>
+                    </div>
+                    
                     var userName = User.Identity.GetUserName();
-                    User user = await user_db.Users.FirstOrDefaultAsync(x => x.Login == userName); 
+                    User user = await user_db.Users.FirstOrDefaultAsync(x => x.Login == userName);
 
                     if (await likes_db.Likes.FirstOrDefaultAsync(i => (i.user_id == user.Id) && (i.book_id == Model.id)) == null)
                     {

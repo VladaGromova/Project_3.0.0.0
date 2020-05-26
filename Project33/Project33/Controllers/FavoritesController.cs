@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Project33.Services.Models;
-using ActionResult = Microsoft.AspNetCore.Mvc.ActionResult;//System.Web.Mvc.ActionResult
 using Controller = Microsoft.AspNetCore.Mvc.Controller;
 using Project33.Data;
 using Microsoft.AspNet.Identity;
-using Project33.Services;
-using Project33.Controllers;
 
 namespace Project33.Controllers
 {
