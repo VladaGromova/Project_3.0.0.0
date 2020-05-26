@@ -2,9 +2,14 @@
 main {
     padding-top: 50px;
 }
-a.font_color {
+h1.favor {
+    padding: 20px;
     color: #550008;
+    font-size: 25pt;
     font-family: Alice;
+}
+a.font_color {
+   
 }
 a.font_color:active {
     color: #913039;
@@ -15,6 +20,22 @@ a.font_color:link {
     font-family: Alice;
 }
 a.font_color:visited {
+    color: #240004;
+    font-family: Alice;
+}
+b.font_color {
+    color: #550008;
+    font-family: Alice;
+}
+b.font_color:active {
+    color: #913039;
+    font-family: Alice;
+}
+b.font_color:link {
+    color: #550008;
+    font-family: Alice;
+}
+b.font_color:visited {
     color: #240004;
     font-family: Alice;
 }
@@ -47,4 +68,48 @@ div.book_inf {
 div.comments {
     padding-left: 20px;
     padding-top: 20px;
+}
+ul.favored {
+    list-style-type: none;
+}
+.bullet {
+    margin-left: 0;
+    list-style: none;
+    counter-reset: li;
+}
+.bullet li {
+    position: relative;
+    margin-bottom: 1.5em;
+    border: 3px solid #b29d7e;
+    padding: 0.6em;
+    border-radius: 20px;
+    background: #FEFEFE;
+    color: #231F20;
+}
+.bullet li:before {
+    position: absolute;
+    top: -0.7em;
+    padding-left: 0.4em;
+    padding-right: 0.4em;
+    font-size: 16px;
+    font-weight: bold;
+    color: #bc8b4e;
+    background: #FEFEFE;
+    border-radius: 50%;
+    counter-increment: li;
+    content: counter(li);
+}
+input.likefavor,
+input.likefavor:hover,
+input.likefavor:focus,
+input.likefavor:visited,
+input.likefavor:active{
+    background-color: #f1d8b9;
+    color: #550008;
+    font-family: Alice;
+    font-size: 10pt;
+    cursor: pointer;
+    outline: none;
+    border: 0 !important;
+    border-radius: 20px;
 }
